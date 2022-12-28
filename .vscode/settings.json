@@ -1,0 +1,9 @@
+{
+    "editor.formatOnSave": true,
+    "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+    "files.associations": {
+        "stack": "cpp",
+        "xtree": "cpp",
+        "xutility": "cpp"
+    }
+}

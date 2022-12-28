@@ -1,0 +1,8 @@
+Button {
+    Texture         = "green.png" Part(190, 0, 190, 49) Smooth;
+    TextureHover    = "green.png" Part(0, 49, 190, 45) Smooth;
+    TextureDown     = "green.png" Part(0, 94, 190, 49) Smooth;
+    TextureFocused  = "green.png" Part(0, 192, 190, 45) Smooth;
+    TextColor       = rgb(250, 250, 250);
+    TextColorHover  = rgb(250, 250, 250);
+}
