@@ -9,8 +9,9 @@ Checks: >
   performance-*,
   portability-*,
   readability-*,
-  -modernize-use-trailing-return-type
-
+  -modernize-use-trailing-return-type,
+  -readability-magic-numbers,
+  -readability-uppercase-literal-suffix,
   
 #  -google-readability-braces-around-statements,
 #  -google-readability-namespace-comments,
@@ -22,7 +23,6 @@ Checks: >
 #  -performance-move-const-arg,
 #  -readability-braces-around-statements,
 #  -readability-identifier-length,
-#  -readability-magic-numbers,
 #  -readability-named-parameter,
 #  -readability-redundant-declaration,
 #  -readability-function-cognitive-complexity,
@@ -34,4 +34,22 @@ Checks: >
 WarningsAsErrors: "*"
 
 HeaderFilterRegex: ".*\\.h$"
+
+CheckOptions:
+  - { key: readability-identifier-naming.NamespaceCase,          value: lower_case }
+  - { key: readability-identifier-naming.ClassCase,              value: CamelCase  }
+  - { key: readability-identifier-naming.StructCase,             value: CamelCase  }
+  - { key: readability-identifier-naming.TemplateParameterCase,  value: CamelCase  }
+  - { key: readability-identifier-naming.FunctionCase,           value: aNy_CasE  }
+  - { key: readability-identifier-naming.VariableCase,           value: lower_case }
+  - { key: readability-identifier-naming.ClassMemberCase,        value: lower_case }
+  - { key: readability-identifier-naming.ClassMemberPrefix,      value: m_          }
+  - { key: readability-identifier-naming.PrivateMemberPrefix,    value: m_          }
+  - { key: readability-identifier-naming.ProtectedMemberPrefix,  value: m_          }
+  - { key: readability-identifier-naming.PrivateMethodPrefix,    value: _          }
+  - { key: readability-identifier-naming.EnumConstantCase,         value: CamelCase }
+  - { key: readability-identifier-naming.ConstexprVariableCase,    value: CamelCase }
+  - { key: readability-identifier-naming.GlobalConstantCase,       value: CamelCase }
+  - { key: readability-identifier-naming.MemberConstantCase,       value: CamelCase }
+  - { key: readability-identifier-naming.StaticConstantCase,       value: CamelCase }
 

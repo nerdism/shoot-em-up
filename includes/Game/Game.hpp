@@ -3,7 +3,8 @@
 #include <stack>
 #include <string>
 
-#include "game/GameState.h"
+#include "Entities/Aircraft.hpp"
+#include "ResourceManager/ResourceManager.hpp"
 
 namespace shootemup
 {
@@ -14,7 +15,7 @@ public:
     Game(uint32_t screen_width, uint32_t screen_height,
          const std::string& window_title);
 
-    void mainloop();
+    void main_loop();
 
 private:
     void _update_game();
@@ -23,9 +24,9 @@ private:
 
     void _render();
 
-    sf::RenderWindow _window;
+    sf::RenderWindow m_window;
 
-    std::stack<GameStatePtr> _game_states;
+    ResourceHolder<sf::Texture, TextureId> m_resource_holder;
 };
 
 }  // namespace shootemup
