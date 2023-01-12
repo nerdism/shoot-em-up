@@ -33,3 +33,34 @@ void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
         iter->draw(target, states);
     }
 }
+
+void SceneNode::update(sf::Time delta_time)
+{
+    _update_current(delta_time);
+    _update_children(delta_time);
+}
+
+void SceneNode::_update_children(sf::Time delta_time)
+{
+    for (const auto& iter : m_children)
+    {
+        iter->update(delta_time);
+    }
+}
+
+sf::Transform SceneNode::get_world_transform() const
+{
+    sf::Transform transform = sf::Transform::Identity;
+
+    for (const SceneNode* node = this; node != nullptr; node = node->m_parent)
+    {
+        transform = getTransform() * transform;
+    }
+
+    return transform;
+}
+
+sf::Vector2f SceneNode::get_world_position() const
+{
+    return get_world_transform() * sf::Vector2f();
+}

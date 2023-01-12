@@ -81,5 +81,6 @@
         "xmemory": "cpp",
         "xstddef": "cpp",
         "xtr1common": "cpp"
-    }
+    },
+    "workbench.tree.indent": 20
 }

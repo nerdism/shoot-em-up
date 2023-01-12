@@ -10,3 +10,8 @@ void Entity::set_velocity(float x_velocity, float y_velocity)
 }
 
 sf::Vector2f Entity::get_velocity() const { return m_velocity; }
+
+void Entity::_update_current(sf::Time delta_time)
+{
+    move(m_velocity * delta_time.asSeconds());
+}
