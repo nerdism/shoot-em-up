@@ -14,7 +14,7 @@ int main()
 
     try
     {
-        Game game{screen_width, screen_height, "Hello Window"};
+        Game game{screen_width, screen_height, "ShootEmUp"};
 
         game.main_loop();
     }
