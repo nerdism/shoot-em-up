@@ -5,6 +5,7 @@
 
 #include "Entities/Aircraft.hpp"
 #include "ResourceManager/ResourceManager.hpp"
+#include "World.hpp"
 
 namespace shootemup
 {
@@ -18,15 +19,14 @@ public:
     void main_loop();
 
 private:
-    void _update_game();
+    void _update_game(sf::Time delta_time);
 
     void _handle_event();
 
     void _render();
 
     sf::RenderWindow m_window;
-
-    ResourceHolder<sf::Texture, TextureId> m_resource_holder;
+    World m_world;
 };
 
 }  // namespace shootemup

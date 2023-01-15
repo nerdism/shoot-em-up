@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Entity.hpp"
+#include "Entities/Entity.hpp"
 #include "ResourceManager/ResourceManager.hpp"
 
 namespace shootemup
@@ -19,8 +19,11 @@ public:
     explicit Aircraft(
         Type type,
         const ResourceHolder<sf::Texture, TextureId>& texture_holder);
+
     void _draw_current(sf::RenderTarget& target,
                        sf::RenderStates states) const override;
+
+    uint32_t get_category() const override;
 
 private:
     Type m_type;

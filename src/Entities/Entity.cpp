@@ -1,4 +1,3 @@
-
 #include "Entities/Entity.hpp"
 
 using shootemup::Entity;
@@ -13,5 +12,5 @@ sf::Vector2f Entity::get_velocity() const { return m_velocity; }
 
 void Entity::_update_current(sf::Time delta_time)
 {
-    move(m_velocity * delta_time.asSeconds());
+    move(0.f, m_velocity.y * delta_time.asSeconds());
 }

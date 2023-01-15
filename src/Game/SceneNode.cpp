@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#include "Commands/Command.hpp"
+
 using shootemup::SceneNode;
 
 void SceneNode::attach_child(Ptr child)
@@ -60,7 +62,33 @@ sf::Transform SceneNode::get_world_transform() const
     return transform;
 }
 
+void SceneNode::_draw_current(sf::RenderTarget& target,
+                              sf::RenderStates states) const
+{
+}
+
+void SceneNode::_update_current(sf::Time delta_time) {}
+
 sf::Vector2f SceneNode::get_world_position() const
 {
     return get_world_transform() * sf::Vector2f();
+}
+
+uint32_t SceneNode::get_category() const 
+{ 
+    return shootemup::EntityCategory::Scene; 
+}
+
+void SceneNode::on_command(const Command& command, sf::Time delta_time)
+{
+    const uint32_t and_result = command.category & get_category();
+    if (static_cast<bool>(and_result))
+    {
+        command.action(*this, delta_time);
+    }
+
+    for (const auto& iter : m_children)
+    {
+        iter->on_command(command, delta_time);
+    }
 }

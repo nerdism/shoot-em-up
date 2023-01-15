@@ -12,15 +12,15 @@ namespace shootemup
 
 enum class TextureId
 {
-    Landscape,
-    Airplane,
-    Missle
+    Desert,
+    Airplane_Eagle,
+    Airplane_Raptor,
 };
 
-// template <typename Resource, typename Identifier>
-// class ResourceHolder;
-//
-// using TextureHolder = ResourceHolder<sf::Texture, TextureId>;
+template <typename Resource, typename Identifier>
+class ResourceHolder;
+
+using TextureHolder = ResourceHolder<sf::Texture, TextureId>;
 
 template <typename Resource, typename Identifier>
 class ResourceHolder

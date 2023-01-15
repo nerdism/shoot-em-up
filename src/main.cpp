@@ -12,9 +12,16 @@ int main()
     const uint32_t screen_width = 640;
     const uint32_t screen_height = 480;
 
-    Game game{screen_width, screen_height, "Hello Window"};
+    try
+    {
+        Game game{screen_width, screen_height, "Hello Window"};
 
-    game.main_loop();
+        game.main_loop();
+    }
+    catch (std::exception& e)
+    {
+        std::cout << "\nException: " << e.what() << std::endl;
+    }
 
     return 0;
 }
