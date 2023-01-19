@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+#include "Commands/CommandQueue.hpp"
+
+using shootemup::CommandQueue;
 using shootemup::Game;
 
 Game::Game(const uint32_t screen_width, const uint32_t screen_height,
@@ -28,27 +31,26 @@ void Game::main_loop()
 void Game::_handle_event()
 {
     sf::Event event;
+    CommandQueue& commands = m_world.get_command_queue();
 
     while (m_window.pollEvent(event))
     {
         // window close button
+        m_player.handle_event(event, commands);
+
         if (event.type == sf::Event::Closed)
         {
             m_window.close();
         }
-
-        // if (event.type == sf::Event::KeyPressed)
-        //{
-        //     // fullscreen m_window for demonestration
-        //     if (event.key.code == sf::Keyboard::Escape)
-        //     {
-        //         m_window.close();
-        //     }
-        // }
     }
+
+    m_player.handle_realtime_input(commands);
 }
 
-void Game::_update_game(sf::Time delta_time) { m_world.update(delta_time); }
+void Game::_update_game(sf::Time delta_time)
+{
+    m_world.update(delta_time);
+}
 
 void Game::_render()
 {

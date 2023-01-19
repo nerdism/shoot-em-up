@@ -60,7 +60,7 @@ void World::_build_scene()
         std::make_unique<Aircraft>(Aircraft::Type::Eagle, m_texture_holder);
     m_player_aircraft = leader.get();
     m_player_aircraft->setPosition(m_spawn_position);
-    m_player_aircraft->set_velocity(40.f, m_scroll_speed);
+    m_player_aircraft->set_velocity(0.f, m_scroll_speed);
 
     const auto air_index = static_cast<uint32_t>(World::SceneLayer::Air);
 
@@ -85,13 +85,38 @@ void World::draw()
 
 void World::update(sf::Time delta_time)
 {
+    m_world_view.move(0.f, m_scroll_speed * delta_time.asSeconds());
+    m_player_aircraft->set_velocity(0.f, 0.f);
     while (!m_command_queue.empty())
     {
         m_scene_graph.on_command(m_command_queue.front(), delta_time);
         m_command_queue.pop();
     }
 
-    m_world_view.move(0.f, m_scroll_speed * delta_time.asSeconds());
+    sf::Vector2f velocity = m_player_aircraft->get_velocity();
+
+    if (velocity.x != 0.f && velocity.y != 0.f)
+    {
+        m_player_aircraft->set_velocity(velocity / std::sqrt(2.f));
+    }
+
+    m_player_aircraft->accelerate(sf::Vector2f(0.f, m_scroll_speed));
+
+    sf::FloatRect view_bounds(
+        m_world_view.getCenter() - m_world_view.getSize() / 2.f,
+        m_world_view.getSize());
+    const float border_distance = 40.f;
+
+    sf::Vector2f position = m_player_aircraft->getPosition();
+    position.x = std::max(position.x, view_bounds.left + border_distance);
+    position.x = std::min(
+        position.x, view_bounds.left + view_bounds.width - border_distance);
+    position.y = std::max(position.y, view_bounds.top + border_distance);
+    position.y = std::min(
+        position.y, view_bounds.top + view_bounds.height - border_distance);
+
+    m_player_aircraft->setPosition(position);
+
     m_scene_graph.update(delta_time);
 }
 

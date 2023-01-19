@@ -8,19 +8,24 @@
 
 namespace shootemup
 {
+class Command;
 
 class SceneNode : public sf::Drawable, public sf::Transformable
 {
 public:
     using Ptr = std::unique_ptr<SceneNode>;
 
-    SceneNode() { m_parent = nullptr; };
+    SceneNode()
+    {
+        m_parent = nullptr;
+    };
 
     SceneNode(const SceneNode&) = delete;
 
     SceneNode& operator=(const SceneNode&) = delete;
 
     void attach_child(Ptr child);
+
     Ptr dettach_child(const SceneNode& node);
 
     void update(sf::Time delta_time);

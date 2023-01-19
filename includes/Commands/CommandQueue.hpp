@@ -6,4 +6,5 @@
 namespace shootemup
 {
 using CommandQueue = std::queue<Command>;
+
 }

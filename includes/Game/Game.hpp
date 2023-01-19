@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Entities/Aircraft.hpp"
+#include "Player.hpp"
 #include "ResourceManager/ResourceManager.hpp"
 #include "World.hpp"
 
@@ -27,6 +28,7 @@ private:
 
     sf::RenderWindow m_window;
     World m_world;
+    Player m_player;
 };
 
 }  // namespace shootemup

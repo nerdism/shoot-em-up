@@ -15,6 +15,8 @@ public:
 
     sf::Vector2f get_velocity() const;
 
+    void accelerate(sf::Vector2f velocity);
+
 protected:
     void _update_current(sf::Time delta_time) override;
 
