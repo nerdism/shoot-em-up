@@ -66,6 +66,7 @@ void World::_build_scene()
 
     m_scene_layers[air_index]->attach_child(std::move(leader));
 
+    /*
     std::unique_ptr<Aircraft> left_escort =
         std::make_unique<Aircraft>(Aircraft::Type::Raptor, m_texture_holder);
     left_escort->setPosition(-80.f, 50.f);
@@ -75,6 +76,7 @@ void World::_build_scene()
         std::make_unique<Aircraft>(Aircraft::Type::Raptor, m_texture_holder);
     right_escort->setPosition(80.f, 50.f);
     m_player_aircraft->attach_child(std::move(right_escort));
+    */
 }
 
 void World::draw()
