@@ -3,11 +3,11 @@ ShootEmUp game from sfml game development book by Jan Haller, Henrik Vogelius Ha
 <br>
 my aim is to create a simple engine with help of libraries to create games and i begin with this game.
 ## Road Map
-- [ ] Reimplement or copy ShootEmUp game from sfml book in order to understand game programming.
-- [ ] refactor the game with using the thor library instead of some manually written code.
-- [ ] refactor the game with using the tgui library instead of pure sfml.
-- [ ] replace box2d for colission handling.
-- [ ] Reimplment the game the help of entt library.
+- [ ] Reimplement ShootEmUp game from sfml book.
+- [ ] Refactor using the thor library.
+- [ ] Refactor using the tgui library.
+- [ ] Replace box2d for colission handling.
+- [ ] Refactor using entt library.
 - [ ] Add modding support with lua or python if possible.
 - [ ] seperate the engine and game code.
 - [ ] make another repo for engine.
