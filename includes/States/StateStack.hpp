@@ -59,4 +59,11 @@ private:
     std::map<GameState, std::function<State::Ptr()> > m_factories;
 };
 
+template <typename T>
+void StateStack::register_state(GameState game_state)
+{
+    m_factories[game_state] = [this]()
+    { return State::Ptr(new T(*this, m_context)); };
+}
+
 }  // namespace shootemup

@@ -4,10 +4,12 @@
 #include <iostream>
 
 #include "Commands/CommandQueue.hpp"
+#include "States/GamePlayState.hpp"
 #include "States/StateStack.hpp"
 
 using shootemup::CommandQueue;
 using shootemup::Game;
+using shootemup::GamePlayState;
 
 Game::Game(const uint32_t screen_width, const uint32_t screen_height,
            const std::string& window_title)
@@ -17,7 +19,9 @@ Game::Game(const uint32_t screen_width, const uint32_t screen_height,
     const uint32_t framerate = 60;
     m_window.setFramerateLimit(framerate);
 
-    m_state_stack.push_state(GameState::Title);
+    _register_states();
+
+    m_state_stack.push_state(GameState::GamePlay);
 }
 
 void Game::main_loop()
@@ -66,5 +70,5 @@ void Game::_render()
 
 void Game::_register_states()
 {
-    // m_state_stack.register_state<GameState::Title>()
+    m_state_stack.register_state<GamePlayState>(GameState::GamePlay);
 }

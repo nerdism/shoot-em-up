@@ -12,12 +12,12 @@ class GamePlayState : public State
 public:
     GamePlayState(StateStack& stack, Context context);
     void draw() override;
-    bool update(sf::Time dt) override;
+    bool update(sf::Time delta_time) override;
     bool handle_event(const sf::Event& event) override;
 
 private:
-    // World mWorld;
-    // Player& mPlayer;
+    World m_world;
+    Player& m_player;
 };
 
 }  // namespace shootemup
