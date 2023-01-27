@@ -17,7 +17,7 @@ public:
     {
     }
 
-    void operator()(Aircraft& aircraft, sf::Time delta_time) const
+    void operator()(Aircraft& aircraft, sf::Time /*delta_time*/) const
     {
         aircraft.accelerate(m_velocity);
     }

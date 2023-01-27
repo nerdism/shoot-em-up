@@ -51,7 +51,7 @@ protected:
     [[nodiscard]] Context get_context() const;
 
 private:
-    StateStack* m_stack;
+    StateStack* m_state_stack;
     Context m_context;
 };
 }  // namespace shootemup

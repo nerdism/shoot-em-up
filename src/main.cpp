@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include "game/game.hpp"
+#include "Game/Game.hpp"
 
 using shootemup::Game;
 
@@ -15,7 +15,6 @@ int main()
     try
     {
         Game game{screen_width, screen_height, "ShootEmUp"};
-
         game.main_loop();
     }
     catch (std::exception& e)
