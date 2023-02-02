@@ -10,8 +10,14 @@ CMRC_DECLARE(game_resources);
 namespace shootemup
 {
 
+enum class FontId
+{
+    Main
+};
+
 enum class TextureId
 {
+    TitleScreen,
     Desert,
     Airplane_Eagle,
     Airplane_Raptor,
@@ -21,6 +27,7 @@ template <typename Resource, typename Identifier>
 class ResourceHolder;
 
 using TextureHolder = ResourceHolder<sf::Texture, TextureId>;
+using FontHolder = ResourceHolder<sf::Font, FontId>;
 
 template <typename Resource, typename Identifier>
 class ResourceHolder

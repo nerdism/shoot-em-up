@@ -6,6 +6,7 @@
 #include "Entities/Aircraft.hpp"
 #include "Player.hpp"
 #include "ResourceManager/ResourceManager.hpp"
+#include "States/StateStack.hpp"
 #include "World.hpp"
 
 namespace shootemup
@@ -22,13 +23,18 @@ public:
 private:
     void _update_game(sf::Time delta_time);
 
-    void _handle_event();
+    void _process_inputs();
 
     void _render();
 
+    void _register_states();
+
     sf::RenderWindow m_window;
-    World m_world;
+    TextureHolder m_texture_holder;
+    FontHolder m_font_holder;
     Player m_player;
+
+    StateStack m_state_stack;
 };
 
 }  // namespace shootemup
