@@ -28,10 +28,10 @@ private:
 
 Player::Player()
 {
-    m_key_bindings[sf::Keyboard::Left] = Action::MoveLeft;
-    m_key_bindings[sf::Keyboard::Right] = Action::MoveRight;
-    m_key_bindings[sf::Keyboard::Up] = Action::MoveUp;
-    m_key_bindings[sf::Keyboard::Down] = Action::MoveDown;
+    m_key_bindings[sf::Keyboard::A] = Action::MoveLeft;
+    m_key_bindings[sf::Keyboard::D] = Action::MoveRight;
+    m_key_bindings[sf::Keyboard::W] = Action::MoveUp;
+    m_key_bindings[sf::Keyboard::S] = Action::MoveDown;
 
     const float player_speed = 200.f;
 

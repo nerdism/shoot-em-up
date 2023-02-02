@@ -31,6 +31,7 @@ private:
 
     sf::RenderWindow m_window;
     TextureHolder m_texture_holder;
+    FontHolder m_font_holder;
     Player m_player;
 
     StateStack m_state_stack;

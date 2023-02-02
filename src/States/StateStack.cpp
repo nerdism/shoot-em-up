@@ -28,7 +28,7 @@ void StateStack::handle_event(const sf::Event& event)
     {
         if (!(*iter)->handle_event(event))
         {
-            return;
+            break;
         }
     }
     _apply_pending_changes();
@@ -48,7 +48,7 @@ void StateStack::update(sf::Time delta_time)
     {
         if (!(*iter)->update(delta_time))
         {
-            return;
+            break;
         }
     }
     _apply_pending_changes();
@@ -72,6 +72,7 @@ void StateStack::_apply_pending_changes()
                 break;
         }
     }
+    m_pending_list.clear();
 }
 
 void StateStack::push_state(GameState game_state)
@@ -80,11 +81,11 @@ void StateStack::push_state(GameState game_state)
 }
 void StateStack::pop_state()
 {
-    m_pending_list.pop_back();
+    m_pending_list.emplace_back(StackAction::Pop);
 }
 void StateStack::clear_states()
 {
-    m_pending_list.clear();
+    m_pending_list.emplace_back(StackAction::Clear);
 }
 
 StateStack::PendingChange::PendingChange(StackAction action,

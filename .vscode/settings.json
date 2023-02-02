@@ -7,6 +7,7 @@
         "iostream": "cpp",
         "vector": "cpp",
         "type_traits": "cpp",
-        "*.rh": "cpp"
+        "*.rh": "cpp",
+        "memory": "cpp"
     }
 }

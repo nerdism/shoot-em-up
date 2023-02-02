@@ -28,11 +28,11 @@ public:
     struct Context
     {
         Context(sf::RenderWindow& window, TextureHolder& textures,
-                Player& player);
+                FontHolder& fonts, Player& player);
 
         sf::RenderWindow* window;
         TextureHolder* textures;
-        // FontHolder* fonts;
+        FontHolder* fonts;
         Player* player;
     };
 
@@ -44,9 +44,9 @@ public:
     virtual bool handle_event(const sf::Event& event) = 0;
 
 protected:
-    void request_stack_push(GameState game_state);
-    void request_stack_pop();
-    void request_state_clear();
+    void _request_stack_push(GameState game_state);
+    void _request_stack_pop();
+    void _request_state_clear();
 
     [[nodiscard]] Context get_context() const;
 

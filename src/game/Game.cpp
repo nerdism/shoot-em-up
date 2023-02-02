@@ -6,22 +6,25 @@
 #include "Commands/CommandQueue.hpp"
 #include "States/GamePlayState.hpp"
 #include "States/StateStack.hpp"
+#include "States/TitleState.hpp"
 
 using shootemup::CommandQueue;
 using shootemup::Game;
 using shootemup::GamePlayState;
+using shootemup::TitleState;
 
 Game::Game(const uint32_t screen_width, const uint32_t screen_height,
            const std::string& window_title)
     : m_window{sf::VideoMode(screen_width, screen_height), window_title},
-      m_state_stack{State::Context{m_window, m_texture_holder, m_player}}
+      m_state_stack{
+          State::Context{m_window, m_texture_holder, m_font_holder, m_player}}
 {
     const uint32_t framerate = 60;
     m_window.setFramerateLimit(framerate);
 
     _register_states();
 
-    m_state_stack.push_state(GameState::GamePlay);
+    m_state_stack.push_state(GameState::Title);
 }
 
 void Game::main_loop()
@@ -62,7 +65,7 @@ void Game::_update_game(sf::Time delta_time)
 
 void Game::_render()
 {
-    m_window.clear(sf::Color::White);
+    m_window.clear();
     m_state_stack.draw();
     m_window.setView(m_window.getDefaultView());
     m_window.display();
@@ -71,4 +74,5 @@ void Game::_render()
 void Game::_register_states()
 {
     m_state_stack.register_state<GamePlayState>(GameState::GamePlay);
+    m_state_stack.register_state<TitleState>(GameState::Title);
 }
