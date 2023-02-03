@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <TGUI/TGUI.hpp>
 
 #include "Game/Player.hpp"
 #include "ResourceManager/ResourceManager.hpp"
@@ -27,10 +28,11 @@ public:
 
     struct Context
     {
-        Context(sf::RenderWindow& window, TextureHolder& textures,
-                FontHolder& fonts, Player& player);
+        Context(sf::RenderWindow& window, tgui::GuiSFML& gui,
+                TextureHolder& textures, FontHolder& fonts, Player& player);
 
         sf::RenderWindow* window;
+        tgui::GuiSFML* gui;
         TextureHolder* textures;
         FontHolder* fonts;
         Player* player;

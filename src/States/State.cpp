@@ -11,9 +11,11 @@ State::State(StateStack& stack, Context context)
 {
 }
 
-State::Context::Context(sf::RenderWindow& window, TextureHolder& textures,
-                        FontHolder& fonts, Player& player)
+State::Context::Context(sf::RenderWindow& window, tgui::GuiSFML& gui,
+                        TextureHolder& textures, FontHolder& fonts,
+                        Player& player)
     : window{&window},
+      gui{&gui},
       textures{&textures},
       fonts{&fonts},
       player{&player}

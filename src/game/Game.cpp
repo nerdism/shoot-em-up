@@ -20,11 +20,12 @@ using shootemup::TitleState;
 Game::Game(const uint32_t screen_width, const uint32_t screen_height,
            const std::string& window_title)
     : m_window{sf::VideoMode(screen_width, screen_height), window_title},
-      m_state_stack{
-          State::Context{m_window, m_texture_holder, m_font_holder, m_player}}
+      m_state_stack{State::Context{m_window, m_gui, m_texture_holder,
+                                   m_font_holder, m_player}}
 {
     const uint32_t framerate = 60;
     m_window.setFramerateLimit(framerate);
+    m_gui.setTarget(m_window);
 
     m_texture_holder.load_compiled_resource(
         TextureId::TitleScreen, "resources/images/menu/TitleScreen.png");
@@ -57,6 +58,9 @@ void Game::_process_inputs()
 
     while (m_window.pollEvent(event))
     {
+        // tgui handle event
+        m_gui.handleEvent(event);
+
         // window close button
         m_state_stack.handle_event(event);
 
@@ -77,6 +81,7 @@ void Game::_render()
     m_window.clear();
     m_state_stack.draw();
     m_window.setView(m_window.getDefaultView());
+    m_gui.draw();
     m_window.display();
 }
 

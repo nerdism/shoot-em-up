@@ -2,8 +2,8 @@
 # project specific logic here.
 #
 
-#set(TGUI_STATIC_LIBRARIES TRUE)
-#find_package(TGUI CONFIG REQUIRED)
+set(TGUI_STATIC_LIBRARIES TRUE)
+find_package(TGUI CONFIG REQUIRED)
 find_package(SFML COMPONENTS system window graphics network audio)
 find_package(CMakeRC CONFIG REQUIRED)
 
@@ -18,7 +18,7 @@ file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS *.cpp)
 # Add source to this project's executable.
 add_executable (ShootEmUp WIN32 ${SRC_FILES})
 
-set(LIBS sfml-graphics sfml-audio sfml-system sfml-network sfml-window game::rc)
+set(LIBS sfml-graphics sfml-audio sfml-system sfml-network sfml-window tgui game::rc)
 
 if (CMAKE_HOST_WIN32)
   list(APPEND LIBS sfml-main)

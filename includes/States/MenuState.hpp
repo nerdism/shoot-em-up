@@ -11,23 +11,16 @@ class MenuState : public State
 {
 public:
     MenuState(StateStack& stack, Context context);
+    ~MenuState();
 
     void draw() override;
     bool update(sf::Time delta_time) override;
     bool handle_event(const sf::Event& event) override;
 
-    void update_option_text();
-
-private:
-    enum class OptionNames
-    {
-        Play,
-        Exit,
-    };
-
 private:
     sf::Sprite m_background_sprite;
-    std::vector<sf::Text> m_options;
-    std::size_t m_option_index;
+    tgui::VerticalLayout::Ptr m_vertical_layout;
+    tgui::Button::Ptr m_play_button;
+    tgui::Button::Ptr m_exit_button;
 };
 }  // namespace shootemup

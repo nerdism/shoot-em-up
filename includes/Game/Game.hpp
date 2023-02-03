@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <TGUI/TGUI.hpp>
 #include <stack>
 #include <string>
 
@@ -35,6 +36,7 @@ private:
     Player m_player;
 
     StateStack m_state_stack;
+    tgui::GuiSFML m_gui;
 };
 
 }  // namespace shootemup
