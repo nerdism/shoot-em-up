@@ -5,12 +5,16 @@
 
 #include "Commands/CommandQueue.hpp"
 #include "States/GamePlayState.hpp"
+#include "States/MenuState.hpp"
+#include "States/PauseState.hpp"
 #include "States/StateStack.hpp"
 #include "States/TitleState.hpp"
 
 using shootemup::CommandQueue;
 using shootemup::Game;
 using shootemup::GamePlayState;
+using shootemup::MenuState;
+using shootemup::PauseState;
 using shootemup::TitleState;
 
 Game::Game(const uint32_t screen_width, const uint32_t screen_height,
@@ -22,6 +26,11 @@ Game::Game(const uint32_t screen_width, const uint32_t screen_height,
     const uint32_t framerate = 60;
     m_window.setFramerateLimit(framerate);
 
+    m_texture_holder.load_compiled_resource(
+        TextureId::TitleScreen, "resources/images/menu/TitleScreen.png");
+
+    m_font_holder.load_compiled_resource(
+        FontId::Main, "resources/gui-theme/kenvector_future.ttf");
     _register_states();
 
     m_state_stack.push_state(GameState::Title);
@@ -75,4 +84,6 @@ void Game::_register_states()
 {
     m_state_stack.register_state<GamePlayState>(GameState::GamePlay);
     m_state_stack.register_state<TitleState>(GameState::Title);
+    m_state_stack.register_state<MenuState>(GameState::Menu);
+    m_state_stack.register_state<PauseState>(GameState::Pause);
 }

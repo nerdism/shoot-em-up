@@ -26,9 +26,16 @@ bool GamePlayState::update(sf::Time delta_time)
 
 bool GamePlayState::handle_event(const sf::Event& event)
 {
-    CommandQueue& command_queue = m_world.get_command_queue();
-
-    m_player.handle_event(event, command_queue);
+    if (event.type == sf::Event::KeyPressed &&
+        event.key.code == sf::Keyboard::Escape)
+    {
+        _request_stack_push(GameState::Pause);
+    }
+    else
+    {
+        CommandQueue& command_queue = m_world.get_command_queue();
+        m_player.handle_event(event, command_queue);
+    }
 
     return false;
 }

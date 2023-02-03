@@ -46,7 +46,7 @@ public:
 protected:
     void _request_stack_push(GameState game_state);
     void _request_stack_pop();
-    void _request_state_clear();
+    void _request_stack_clear();
 
     [[nodiscard]] Context get_context() const;
 

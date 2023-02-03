@@ -29,7 +29,7 @@ void State::_request_stack_pop()
 {
     m_state_stack->pop_state();
 }
-void State::_request_state_clear()
+void State::_request_stack_clear()
 {
     m_state_stack->clear_states();
 }

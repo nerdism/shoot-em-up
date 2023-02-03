@@ -4,17 +4,11 @@ using shootemup::TitleState;
 
 TitleState::TitleState(StateStack& stack, Context context)
     : State(stack, context),
-      m_show_text{false},
+      m_show_text{true},
       m_text_effect_time{sf::Time::Zero}
 {
-    context.textures->load_compiled_resource(
-        TextureId::TitleScreen, "resources/images/menu/TitleScreen.png");
     m_background_sprite.setTexture(
         context.textures->get(TextureId::TitleScreen));
-
-    context.fonts->load_compiled_resource(
-        FontId::Main, "resources/gui-theme/kenvector_future.ttf");
-
     m_text.setFont(context.fonts->get(FontId::Main));
     m_text.setString("Press Any Key To Continue");
 
@@ -50,7 +44,7 @@ bool TitleState::handle_event(const sf::Event& event)
     if (event.type == sf::Event::KeyPressed)
     {
         _request_stack_pop();
-        _request_stack_push(GameState::GamePlay);
+        _request_stack_push(GameState::Menu);
     }
     return true;
 }
