@@ -20,7 +20,7 @@ public:
 private:
     sf::Sprite m_background_sprite;
     tgui::VerticalLayout::Ptr m_vertical_layout;
-    tgui::Button::Ptr m_play_button;
-    tgui::Button::Ptr m_exit_button;
+    tgui::Label::Ptr m_play_button;
+    tgui::Label::Ptr m_exit_button;
 };
 }  // namespace shootemup

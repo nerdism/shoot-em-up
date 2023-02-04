@@ -17,11 +17,18 @@ public:
 
     void accelerate(sf::Vector2f velocity);
 
+    void repair(std::uint32_t points);
+    void damage(std::uint32_t points);
+    void destroy();
+    std::uint32_t get_hitpoints();
+    bool is_destroyed();
+
 protected:
     void _update_current(sf::Time delta_time) override;
 
 private:
     sf::Vector2f m_velocity;
+    std::uint32_t m_hitpoint;
 };
 
 }  // namespace shootemup

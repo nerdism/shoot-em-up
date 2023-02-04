@@ -13,28 +13,48 @@ MenuState::MenuState(StateStack& stack, Context context)
     m_background_sprite.setTexture(texture);
 
     tgui::GuiSFML& gui = *context.gui;
-    m_play_button = tgui::Button::create();
+    m_play_button = tgui::Label::create();
 
     m_play_button->setText("Play");
+    m_play_button->setTextSize(40);
+    m_play_button->getRenderer()->setTextColor(sf::Color::White);
+    m_play_button->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    m_play_button->setHorizontalAlignment(
+        tgui::Label::HorizontalAlignment::Center);
     // m_play_button->setPosition("50%", "50%");
     // m_play_button->setSize("15%", "5%");
-    m_play_button->onPress(
-        [&]
+    m_play_button->onClick(
+        [&]()
         {
             _request_stack_pop();
             _request_stack_push(GameState::GamePlay);
         });
+    m_play_button->onMouseEnter(
+        [&]() { m_play_button->getRenderer()->setTextColor(sf::Color::Red); });
+    m_play_button->onMouseLeave(
+        [&]()
+        { m_play_button->getRenderer()->setTextColor(sf::Color::White); });
 
-    m_exit_button = tgui::Button::create();
+    m_exit_button = tgui::Label::create();
+    m_exit_button->getRenderer()->setTextColor(sf::Color::White);
+    m_exit_button->onMouseEnter(
+        [&]() { m_exit_button->getRenderer()->setTextColor(sf::Color::Red); });
+    m_exit_button->onMouseLeave(
+        [&]()
+        { m_exit_button->getRenderer()->setTextColor(sf::Color::White); });
+    m_exit_button->setTextSize(40);
+    m_exit_button->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    m_exit_button->setHorizontalAlignment(
+        tgui::Label::HorizontalAlignment::Center);
     m_exit_button->setText("Exit");
     // m_exit_button->setPosition("50%", "50%");
     // m_exit_button->setSize("15%", "5%");
-    m_exit_button->onPress([&] { _request_stack_clear(); });
+    m_exit_button->onClick([&] { _request_stack_clear(); });
 
     m_vertical_layout = tgui::VerticalLayout::create();
     m_vertical_layout->setOrigin(0.5f, 0.5f);
     m_vertical_layout->setPosition("50%", "50%");
-    m_vertical_layout->setSize("30%", "20%");
+    m_vertical_layout->setSize("30%", "35%");
     m_vertical_layout->add(m_play_button);
     m_vertical_layout->add(m_exit_button);
     m_vertical_layout->insertSpace(0, 0.8f);
