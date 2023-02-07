@@ -3,11 +3,11 @@
 #include <SFML/Graphics.hpp>
 #include <array>
 
+#include "Commands/Command.hpp"
+#include "Commands/CommandQueue.hpp"
 #include "Entities/Aircraft.hpp"
 #include "Game/SceneNode.hpp"
 #include "ResourceManager/ResourceManager.hpp"
-#include "Commands/Command.hpp"
-#include "Commands/CommandQueue.hpp"
 
 namespace shootemup
 {
@@ -17,7 +17,7 @@ public:
     World(const World& world) = delete;
     World& operator=(const World& world) = delete;
 
-    World(sf::RenderWindow& window);
+    World(sf::RenderWindow& window, FontHolder& font_holder);
 
     CommandQueue& get_command_queue();
 
@@ -40,6 +40,7 @@ private:
     sf::View m_world_view;
 
     TextureHolder m_texture_holder;
+    FontHolder& m_font_holder;
     SceneNode m_scene_graph;
     std::array<SceneNode*, static_cast<uint32_t>(SceneLayer::LayerCount)>
         m_scene_layers;
@@ -49,6 +50,5 @@ private:
     float m_scroll_speed;
     Aircraft* m_player_aircraft;
     CommandQueue m_command_queue;
-
 };
 }  // namespace shootemup

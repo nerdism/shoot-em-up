@@ -1,40 +1,53 @@
 
 #include "Game/DataTables.hpp"
 
+#include <vector>
+
+#include "Entities/Aircraft.hpp"
+#include "ResourceManager/ResourceManager.hpp"
+
 // For std::bind() placeholders _1, _2, ...
 using namespace std::placeholders;
+using shootemup::Aircraft;
+using shootemup::AircraftData;
+using shootemup::Direction;
+using shootemup::TextureId;
 
-std::vector<AircraftData> initializeAircraftData()
+std::vector<AircraftData> initialize_aircraft_data()
 {
-    std::vector<AircraftData> data(Aircraft::TypeCount);
+    std::vector<AircraftData> data(static_cast<int>(Aircraft::Type::TypeCount));
 
-    data[Aircraft::Eagle].hitpoints = 100;
-    data[Aircraft::Eagle].speed = 200.f;
-    data[Aircraft::Eagle].fireInterval = sf::seconds(1);
-    data[Aircraft::Eagle].texture = Textures::Eagle;
+    auto eagle_index = static_cast<uint32_t>(Aircraft::Type::Eagle);
+    auto raptor_index = static_cast<uint32_t>(Aircraft::Type::Raptor);
+    auto avenger_index = static_cast<uint32_t>(Aircraft::Type::Avenger);
 
-    data[Aircraft::Raptor].hitpoints = 20;
-    data[Aircraft::Raptor].speed = 80.f;
-    data[Aircraft::Raptor].texture = Textures::Raptor;
-    data[Aircraft::Raptor].directions.push_back(Direction(+45.f, 80.f));
-    data[Aircraft::Raptor].directions.push_back(Direction(-45.f, 160.f));
-    data[Aircraft::Raptor].directions.push_back(Direction(+45.f, 80.f));
-    data[Aircraft::Raptor].fireInterval = sf::Time::Zero;
+    data[eagle_index].hitpoints = 100;
+    data[eagle_index].speed = 200.f;
+    data[eagle_index].fireInterval = sf::seconds(1);
+    data[eagle_index].texture = TextureId::Airplane_Eagle;
 
-    data[Aircraft::Avenger].hitpoints = 40;
-    data[Aircraft::Avenger].speed = 50.f;
-    data[Aircraft::Avenger].texture = Textures::Avenger;
-    data[Aircraft::Avenger].directions.push_back(Direction(+45.f, 50.f));
-    data[Aircraft::Avenger].directions.push_back(Direction(0.f, 50.f));
-    data[Aircraft::Avenger].directions.push_back(Direction(-45.f, 100.f));
-    data[Aircraft::Avenger].directions.push_back(Direction(0.f, 50.f));
-    data[Aircraft::Avenger].directions.push_back(Direction(+45.f, 50.f));
-    data[Aircraft::Avenger].fireInterval = sf::seconds(2);
+    data[raptor_index].hitpoints = 20;
+    data[raptor_index].speed = 80.f;
+    data[raptor_index].texture = TextureId::Airplane_Raptor;
+    data[raptor_index].directions.emplace_back(+45.f, 80.f);
+    data[raptor_index].directions.emplace_back(-45.f, 160.f);
+    data[raptor_index].directions.emplace_back(+45.f, 80.f);
+    data[raptor_index].fireInterval = sf::Time::Zero;
+
+    data[avenger_index].hitpoints = 40;
+    data[avenger_index].speed = 50.f;
+    data[avenger_index].texture = TextureId::Airplane_Avenger;
+    data[avenger_index].directions.emplace_back(+45.f, 50.f);
+    data[avenger_index].directions.emplace_back(0.f, 50.f);
+    data[avenger_index].directions.emplace_back(-45.f, 100.f);
+    data[avenger_index].directions.emplace_back(0.f, 50.f);
+    data[avenger_index].directions.emplace_back(+45.f, 50.f);
+    data[avenger_index].fireInterval = sf::seconds(2);
 
     return data;
 }
-
-std::vector<ProjectileData> initializeProjectileData()
+/*
+std::vector<ProjectileData> initialize_projectile_data()
 {
     std::vector<ProjectileData> data(Projectile::TypeCount);
 
@@ -53,7 +66,7 @@ std::vector<ProjectileData> initializeProjectileData()
     return data;
 }
 
-std::vector<PickupData> initializePickupData()
+std::vector<PickupData> initialize_pickup_data()
 {
     std::vector<PickupData> data(Pickup::TypeCount);
 
@@ -62,13 +75,16 @@ std::vector<PickupData> initializePickupData()
 
     data[Pickup::MissileRefill].texture = Textures::MissileRefill;
     data[Pickup::MissileRefill].action =
-        std::bind(&Aircraft::collectMissiles, _1, 3);
+        std::bind(&Aircraft::Type::collectMissiles, _1, 3);
 
     data[Pickup::FireSpread].texture = Textures::FireSpread;
-    data[Pickup::FireSpread].action = std::bind(&Aircraft::increaseSpread, _1);
+    data[Pickup::FireSpread].action = std::bind(&Aircraft::Type::increaseSpread,
+_1);
 
     data[Pickup::FireRate].texture = Textures::FireRate;
-    data[Pickup::FireRate].action = std::bind(&Aircraft::increaseFireRate, _1);
+    data[Pickup::FireRate].action = std::bind(&Aircraft::Type::increaseFireRate,
+_1);
 
     return data;
 }
+*/

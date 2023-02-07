@@ -5,14 +5,15 @@
 using shootemup::CommandQueue;
 using shootemup::World;
 
-World::World(sf::RenderWindow& window)
+World::World(sf::RenderWindow& window, FontHolder& font_holder)
     : m_window{window},
       m_world_view{window.getDefaultView()},
       m_world_bounds{0, 0, m_world_view.getSize().x, 2000.f},
       m_spawn_position{m_world_view.getSize().x / 2.f,
                        m_world_bounds.height - m_world_view.getSize().y / 2.f},
       m_player_aircraft{nullptr},
-      m_scroll_speed{-50.f}
+      m_scroll_speed{-50.f},
+      m_font_holder{font_holder}
 {
     _load_textures();
     _build_scene();
@@ -56,8 +57,8 @@ void World::_build_scene()
     m_scene_layers[background_index]->attach_child(
         std::move(background_sprite));
 
-    std::unique_ptr<Aircraft> leader =
-        std::make_unique<Aircraft>(Aircraft::Type::Eagle, m_texture_holder);
+    std::unique_ptr<Aircraft> leader = std::make_unique<Aircraft>(
+        Aircraft::Type::Eagle, m_texture_holder, m_font_holder);
     m_player_aircraft = leader.get();
     m_player_aircraft->setPosition(m_spawn_position);
     m_player_aircraft->set_velocity(0.f, m_scroll_speed);
