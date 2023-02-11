@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Entities/Entity.hpp"
+#include "Game/DataTables.hpp"
 #include "Game/TextNode.hpp"
 #include "ResourceManager/ResourceManager.hpp"
 
@@ -29,10 +30,20 @@ public:
 
     void _update_current(sf::Time delta_time) override;
 
+    void _update_movement_pattern(sf::Time delta_time);
+
+    float get_maxspeed();
+
 private:
+    void _update_health_display();
+
     Type m_type;
     sf::Sprite m_sprite;
     TextNode* m_health_display;
+    float m_travelled_distance;
+    std::size_t m_direction_index;
+
+    static const std::vector<AircraftData> m_data;
 };
 
 }  // namespace shootemup

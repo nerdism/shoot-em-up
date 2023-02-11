@@ -9,6 +9,8 @@ namespace shootemup
 class Entity : public SceneNode
 {
 public:
+    Entity(std::uint32_t hitpoints);
+
     void set_velocity(sf::Vector2f velocity);
 
     void set_velocity(float x_velocity, float y_velocity);
@@ -28,7 +30,7 @@ protected:
 
 private:
     sf::Vector2f m_velocity;
-    std::uint32_t m_hitpoint;
+    std::uint32_t m_hitpoints;
 };
 
 }  // namespace shootemup

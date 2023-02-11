@@ -13,7 +13,7 @@ using shootemup::AircraftData;
 using shootemup::Direction;
 using shootemup::TextureId;
 
-std::vector<AircraftData> initialize_aircraft_data()
+std::vector<AircraftData> shootemup::initialize_aircraft_data()
 {
     std::vector<AircraftData> data(static_cast<int>(Aircraft::Type::TypeCount));
 
@@ -21,8 +21,7 @@ std::vector<AircraftData> initialize_aircraft_data()
     auto raptor_index = static_cast<uint32_t>(Aircraft::Type::Raptor);
     auto avenger_index = static_cast<uint32_t>(Aircraft::Type::Avenger);
 
-    data[eagle_index].hitpoints = 100;
-    data[eagle_index].speed = 200.f;
+    data[eagle_index].hitpoints = 120;
     data[eagle_index].fireInterval = sf::seconds(1);
     data[eagle_index].texture = TextureId::Airplane_Eagle;
 

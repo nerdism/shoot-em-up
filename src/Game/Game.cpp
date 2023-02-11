@@ -32,9 +32,10 @@ Game::Game(const uint32_t screen_width, const uint32_t screen_height,
 
     m_font_holder.load_compiled_resource(
         FontId::Main, "resources/gui-theme/kenvector_future.ttf");
+
     _register_states();
 
-    m_state_stack.push_state(GameState::Title);
+    m_state_stack.push_state(GameState::GamePlay);
 }
 
 void Game::main_loop()

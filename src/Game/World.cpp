@@ -28,6 +28,8 @@ void World::_load_textures()
     m_texture_holder.load_compiled_resource(
         TextureId::Airplane_Raptor, "resources/images/gameplay/Raptor.png");
     m_texture_holder.load_compiled_resource(
+        TextureId::Airplane_Avenger, "resources/images/gameplay/Avenger.png");
+    m_texture_holder.load_compiled_resource(
         TextureId::Desert, "resources/images/gameplay/Desert.png");
 }
 
@@ -78,6 +80,7 @@ void World::_build_scene()
     right_escort->setPosition(80.f, 50.f);
     m_player_aircraft->attach_child(std::move(right_escort));
     */
+    _add_enemies();
 }
 
 void World::draw()
@@ -121,9 +124,68 @@ void World::update(sf::Time delta_time)
     m_player_aircraft->setPosition(position);
 
     m_scene_graph.update(delta_time);
+
+    _spawn_enemies();
 }
 
 CommandQueue& World::get_command_queue()
 {
     return m_command_queue;
+}
+
+sf::FloatRect World::_get_view_bounds() const
+{
+    return sf::FloatRect(
+        m_world_view.getCenter() - m_world_view.getSize() / 2.f,
+        m_world_view.getSize());
+}
+
+sf::FloatRect World::_get_battlefield_bounds() const
+{
+    // Return view bounds + some area at top, where enemies spawn
+    sf::FloatRect bounds = _get_view_bounds();
+    bounds.top -= 100.f;
+    bounds.height += 100.f;
+
+    return bounds;
+}
+
+void World::_spawn_enemies()
+{
+    while (!m_enemy_spawn_points.empty() &&
+           m_enemy_spawn_points.back().y > _get_battlefield_bounds().top)
+    {
+        std::unique_ptr<Aircraft> enemy = std::make_unique<Aircraft>(
+            m_enemy_spawn_points.back().type, m_texture_holder, m_font_holder);
+
+        enemy->setPosition(m_enemy_spawn_points.back().x,
+                           m_enemy_spawn_points.back().y);
+        enemy->setRotation(180);
+
+        const auto air_index = static_cast<uint32_t>(World::SceneLayer::Air);
+
+        m_scene_layers[air_index]->attach_child(std::move(enemy));
+
+        m_enemy_spawn_points.pop_back();
+    }
+}
+
+void World::_add_enemies()
+{
+    _add_enemy(Aircraft::Type::Raptor, 0.f, 300.f);
+    _add_enemy(Aircraft::Type::Avenger, -100.f, 500.f);
+    _add_enemy(Aircraft::Type::Avenger, 100.f, 800.f);
+    _add_enemy(Aircraft::Type::Raptor, -70.f, 1000.f);
+    _add_enemy(Aircraft::Type::Avenger, -100.f, 1200.f);
+    _add_enemy(Aircraft::Type::Avenger, 200.f, 1500.f);
+    _add_enemy(Aircraft::Type::Raptor, 0.f, 1800.f);
+
+    std::sort(m_enemy_spawn_points.begin(), m_enemy_spawn_points.end(),
+              [](SpawnPoint lhs, SpawnPoint rhs) { return lhs.y < rhs.y; });
+}
+
+void World::_add_enemy(Aircraft::Type type, float x, float y)
+{
+    m_enemy_spawn_points.emplace_back(type, m_spawn_position.x + x,
+                                      m_spawn_position.y - y);
 }
