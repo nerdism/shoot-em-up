@@ -32,7 +32,7 @@ struct AircraftData
     sf::Time fireInterval;
     std::vector<Direction> directions;
 };
-/*
+
 struct ProjectileData
 {
     int damage;
@@ -40,6 +40,7 @@ struct ProjectileData
     TextureId texture;
 };
 
+/*
 struct PickupData
 {
     std::function<void(Aircraft&)> action;
@@ -48,7 +49,7 @@ struct PickupData
 */
 
 std::vector<AircraftData> initialize_aircraft_data();
-// std::vector<ProjectileData> initialize_projectile_data();
+std::vector<ProjectileData> initialize_projectile_data();
 // std::vector<PickupData> initialize_pickup_data();
 
 }  // namespace shootemup

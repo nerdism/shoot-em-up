@@ -1,4 +1,4 @@
-#include "Entities/AirCraft.hpp"
+#include "Entities/Aircraft.hpp"
 
 #include "Commands/Command.hpp"
 #include "Utility.hpp"

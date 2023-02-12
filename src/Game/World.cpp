@@ -30,6 +30,10 @@ void World::_load_textures()
     m_texture_holder.load_compiled_resource(
         TextureId::Airplane_Avenger, "resources/images/gameplay/Avenger.png");
     m_texture_holder.load_compiled_resource(
+        TextureId::Bullet, "resources/images/gameplay/Bullet.png");
+    m_texture_holder.load_compiled_resource(
+        TextureId::Missile, "resources/images/gameplay/Missile.png");
+    m_texture_holder.load_compiled_resource(
         TextureId::Desert, "resources/images/gameplay/Desert.png");
 }
 

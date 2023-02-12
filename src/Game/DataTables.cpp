@@ -4,13 +4,18 @@
 #include <vector>
 
 #include "Entities/Aircraft.hpp"
+#include "Entities/Projectile.hpp"
 #include "ResourceManager/ResourceManager.hpp"
+#include "Utility.hpp"
 
 // For std::bind() placeholders _1, _2, ...
 using namespace std::placeholders;
 using shootemup::Aircraft;
 using shootemup::AircraftData;
 using shootemup::Direction;
+using shootemup::enum_to_int;
+using shootemup::Projectile;
+using shootemup::ProjectileData;
 using shootemup::TextureId;
 
 std::vector<AircraftData> shootemup::initialize_aircraft_data()
@@ -45,25 +50,31 @@ std::vector<AircraftData> shootemup::initialize_aircraft_data()
 
     return data;
 }
-/*
+
 std::vector<ProjectileData> initialize_projectile_data()
 {
-    std::vector<ProjectileData> data(Projectile::TypeCount);
+    std::vector<ProjectileData> data(
+        enum_to_int<uint32_t>(Projectile::Type::TypeCount));
 
-    data[Projectile::AlliedBullet].damage = 10;
-    data[Projectile::AlliedBullet].speed = 300.f;
-    data[Projectile::AlliedBullet].texture = Textures::Bullet;
+    auto allied_index = enum_to_int<uint32_t>(Projectile::Type::AlliedBullet);
+    auto enemy_index = enum_to_int<uint32_t>(Projectile::Type::EnemyBullet);
+    auto missile_index = enum_to_int<uint32_t>(Projectile::Type::Missile);
 
-    data[Projectile::EnemyBullet].damage = 10;
-    data[Projectile::EnemyBullet].speed = 300.f;
-    data[Projectile::EnemyBullet].texture = Textures::Bullet;
+    data[allied_index].damage = 10;
+    data[allied_index].speed = 300.f;
+    data[allied_index].texture = TextureId::Bullet;
 
-    data[Projectile::Missile].damage = 200;
-    data[Projectile::Missile].speed = 150.f;
-    data[Projectile::Missile].texture = Textures::Missile;
+    data[enemy_index].damage = 10;
+    data[enemy_index].speed = 300.f;
+    data[enemy_index].texture = TextureId::Bullet;
+
+    data[missile_index].damage = 200;
+    data[missile_index].speed = 150.f;
+    data[missile_index].texture = TextureId::Missile;
 
     return data;
 }
+/*
 
 std::vector<PickupData> initialize_pickup_data()
 {

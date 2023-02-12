@@ -22,6 +22,9 @@ enum class TextureId
     Airplane_Eagle,
     Airplane_Raptor,
     Airplane_Avenger,
+    Bullet,
+    Missile,
+    TypeCount
 };
 
 template <typename Resource, typename Identifier>
