@@ -51,7 +51,7 @@ std::vector<AircraftData> shootemup::initialize_aircraft_data()
     return data;
 }
 
-std::vector<ProjectileData> initialize_projectile_data()
+std::vector<ProjectileData> shootemup::initialize_projectile_data()
 {
     std::vector<ProjectileData> data(
         enum_to_int<uint32_t>(Projectile::Type::TypeCount));
