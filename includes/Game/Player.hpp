@@ -15,7 +15,9 @@ public:
         MoveLeft,
         MoveRight,
         MoveUp,
-        MoveDown
+        MoveDown,
+        ShootBullet,
+        LaunchMissile
     };
     Player();
 

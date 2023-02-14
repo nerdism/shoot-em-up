@@ -32,6 +32,8 @@ Player::Player()
     m_key_bindings[sf::Keyboard::D] = Action::MoveRight;
     m_key_bindings[sf::Keyboard::W] = Action::MoveUp;
     m_key_bindings[sf::Keyboard::S] = Action::MoveDown;
+    m_key_bindings[sf::Keyboard::Space] = Action::ShootBullet;
+    m_key_bindings[sf::Keyboard::F] = Action::LaunchMissile;
 
     const float player_speed = 200.f;
 

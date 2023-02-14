@@ -90,3 +90,7 @@ float Aircraft::get_maxspeed()
 {
     return m_data[static_cast<uint32_t>(m_type)].speed;
 }
+
+void Aircraft::fire()
+{
+}

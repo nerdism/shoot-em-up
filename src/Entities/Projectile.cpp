@@ -13,16 +13,15 @@ const std::vector<ProjectileData> Projectile::m_data =
 Projectile::Projectile(Type type, const TextureHolder& textures)
     : Entity{1},
       m_type{type},
-      m_sprite{
-          textures.get(m_data[shootemup::enum_to_int<uint32_t>(type)].texture)}
+      m_sprite{textures.get(m_data[shootemup::enum_to_int(type)].texture)}
 {
-    set_velocity(sf::Vector2f(
-        0.f, m_data[shootemup::enum_to_int<uint32_t>(type)].speed));
+    center_origin(m_sprite);
+    set_velocity(sf::Vector2f(0.f, m_data[shootemup::enum_to_int(type)].speed));
 }
 
 uint32_t Projectile::get_category() const
 {
-    if (m_type == Projectile::AlliedBullet)
+    if (m_type == Projectile::Type::AlliedBullet)
     {
         return EntityCategory::AlliedProjectile;
     }
@@ -32,12 +31,12 @@ uint32_t Projectile::get_category() const
 
 float Projectile::get_max_speed() const
 {
-    return m_data[shootemup::enum_to_int<uint32_t>(m_type)].speed;
+    return m_data[shootemup::enum_to_int(m_type)].speed;
 }
 
 int Projectile::get_damage() const
 {
-    return m_data[shootemup::enum_to_int<uint32_t>(m_type)].damage;
+    return m_data[shootemup::enum_to_int(m_type)].damage;
 }
 
 void Projectile::_update_current(sf::Time delta_time)

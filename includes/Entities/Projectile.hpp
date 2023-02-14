@@ -11,7 +11,7 @@ namespace shootemup
 class Projectile : public Entity
 {
 public:
-    enum Type
+    enum class Type
     {
         AlliedBullet,
         EnemyBullet,
@@ -19,7 +19,6 @@ public:
         TypeCount
     };
 
-public:
     Projectile(Type type, const TextureHolder& textures);
 
     void guide_towards(sf::Vector2f position);
@@ -36,7 +35,6 @@ private:
     void _draw_current(sf::RenderTarget& target,
                        sf::RenderStates states) const override;
 
-private:
     Type m_type;
     sf::Sprite m_sprite;
     sf::Vector2f m_target_direction;

@@ -1,17 +1,12 @@
 #include "Utility.hpp"
 
 #include <SFML/Graphics.hpp>
-#include <math>
+#include <cmath>
+#include <concepts>
 
 float shootemup::to_radian(float degree)
 {
     return 3.141592653589793238462643383f / 180.f * degree;
-}
-
-template <typename NumericType, typename EnumType>
-NumericType shootemup::enum_to_int(EnumType enum_name)
-{
-    return static_cast<NumericType>(enum_name);
 }
 
 void shootemup::center_origin(sf::Sprite& sprite)

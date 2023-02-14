@@ -34,6 +34,8 @@ public:
 
     float get_maxspeed();
 
+    void fire();
+
 private:
     void _update_health_display();
 

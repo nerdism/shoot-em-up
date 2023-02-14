@@ -53,12 +53,11 @@ std::vector<AircraftData> shootemup::initialize_aircraft_data()
 
 std::vector<ProjectileData> shootemup::initialize_projectile_data()
 {
-    std::vector<ProjectileData> data(
-        enum_to_int<uint32_t>(Projectile::Type::TypeCount));
+    std::vector<ProjectileData> data(enum_to_int(Projectile::Type::TypeCount));
 
-    auto allied_index = enum_to_int<uint32_t>(Projectile::Type::AlliedBullet);
-    auto enemy_index = enum_to_int<uint32_t>(Projectile::Type::EnemyBullet);
-    auto missile_index = enum_to_int<uint32_t>(Projectile::Type::Missile);
+    auto allied_index = enum_to_int(Projectile::Type::AlliedBullet);
+    auto enemy_index = enum_to_int(Projectile::Type::EnemyBullet);
+    auto missile_index = enum_to_int(Projectile::Type::Missile);
 
     data[allied_index].damage = 10;
     data[allied_index].speed = 300.f;
