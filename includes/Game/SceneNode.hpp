@@ -5,20 +5,20 @@
 #include <vector>
 
 #include "Commands/Command.hpp"
+#include "Commands/CommandQueue.hpp"
+#include "Entities/EntityCategory.hpp"
 
 namespace shootemup
 {
 class Command;
+using CommandQueue = std::queue<Command>;
 
 class SceneNode : public sf::Drawable, public sf::Transformable
 {
 public:
     using Ptr = std::unique_ptr<SceneNode>;
 
-    SceneNode()
-    {
-        m_parent = nullptr;
-    };
+    SceneNode(EntityCategory type = EntityCategory::None);
 
     SceneNode(const SceneNode&) = delete;
 
@@ -28,7 +28,7 @@ public:
 
     Ptr dettach_child(const SceneNode& node);
 
-    void update(sf::Time delta_time);
+    void update(sf::Time delta_time, CommandQueue& command_queue);
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -44,13 +44,15 @@ public:
     void on_command(const Command& command, sf::Time delta_time);
 
 protected:
-    virtual void _update_current(sf::Time delta_time);
+    virtual void _update_current(sf::Time delta_time,
+                                 CommandQueue& command_queue);
 
 private:
-    void _update_children(sf::Time delta_time);
+    void _update_children(sf::Time delta_time, CommandQueue& command_queue);
 
     std::vector<Ptr> m_children;
     SceneNode* m_parent;
+    EntityCategory m_category;
 };
 
 }  // namespace shootemup

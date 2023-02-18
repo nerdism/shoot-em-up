@@ -5,6 +5,7 @@
 #include "Entities/Aircraft.hpp"
 #include "Game/SceneNode.hpp"
 #include "SFML/Graphics.hpp"
+#include "Utility.hpp"
 
 using shootemup::Aircraft;
 using shootemup::Player;
@@ -48,8 +49,14 @@ Player::Player()
 
     for (auto& action_binding : m_action_bindings)
     {
-        action_binding.second.category = EntityCategory::PlayerAircraft;
+        action_binding.second.category =
+            shootemup::enum_to_int(EntityCategory::PlayerAircraft);
     }
+
+    m_action_bindings[Action::ShootBullet].category =
+        shootemup::enum_to_int(EntityCategory::PlayerAircraft);
+    m_action_bindings[Action::ShootBullet].action = derived_action<Aircraft>(
+        [](Aircraft& aircraft, sf::Time /*delta_time*/) { aircraft.fire(); });
 }
 
 void Player::handle_event(const sf::Event& event, CommandQueue& commands)
@@ -58,7 +65,8 @@ void Player::handle_event(const sf::Event& event, CommandQueue& commands)
         event.key.code == sf::Keyboard::P)
     {
         Command output;
-        output.category = shootemup::EntityCategory::PlayerAircraft;
+        output.category =
+            shootemup::enum_to_int(shootemup::EntityCategory::PlayerAircraft);
         output.action = [](SceneNode& s, sf::Time) {
             std::cout << s.getPosition().x << ", " << s.getPosition().y
                       << std::endl;
@@ -135,6 +143,7 @@ bool Player::_is_realtime_action(Action action)
         case Action::MoveRight:
         case Action::MoveUp:
         case Action::MoveDown:
+        case Action::ShootBullet:
             return true;
 
         default:

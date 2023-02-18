@@ -1,5 +1,6 @@
 #include "Entities/Entity.hpp"
 
+using shootemup::CommandQueue;
 using shootemup::Entity;
 
 Entity::Entity(std::uint32_t hitpoints)
@@ -21,7 +22,7 @@ sf::Vector2f Entity::get_velocity() const
     return m_velocity;
 }
 
-void Entity::_update_current(sf::Time delta_time)
+void Entity::_update_current(sf::Time delta_time, CommandQueue& command_queue)
 {
     move(m_velocity * delta_time.asSeconds());
 }

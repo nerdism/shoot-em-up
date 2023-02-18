@@ -27,7 +27,7 @@ std::vector<AircraftData> shootemup::initialize_aircraft_data()
     auto avenger_index = static_cast<uint32_t>(Aircraft::Type::Avenger);
 
     data[eagle_index].hitpoints = 120;
-    data[eagle_index].fireInterval = sf::seconds(1);
+    data[eagle_index].fireInterval = sf::seconds(0.3f);
     data[eagle_index].texture = TextureId::Airplane_Eagle;
 
     data[raptor_index].hitpoints = 20;

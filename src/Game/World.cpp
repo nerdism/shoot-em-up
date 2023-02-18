@@ -42,7 +42,17 @@ void World::_build_scene()
     // Attach layer to the scene graph
     for (std::size_t i = 0; i < m_scene_layers.size(); ++i)
     {
-        SceneNode::Ptr node = std::make_unique<SceneNode>();
+        SceneNode::Ptr node;
+
+        if (i == m_scene_layers.size() - 1)
+        {
+            node = std::make_unique<SceneNode>(EntityCategory::SceneAirLayer);
+        }
+        else
+        {
+            node = std::make_unique<SceneNode>();
+        }
+
         m_scene_layers[i] = node.get();
 
         m_scene_graph.attach_child(std::move(node));
@@ -127,7 +137,7 @@ void World::update(sf::Time delta_time)
 
     m_player_aircraft->setPosition(position);
 
-    m_scene_graph.update(delta_time);
+    m_scene_graph.update(delta_time, m_command_queue);
 
     _spawn_enemies();
 }

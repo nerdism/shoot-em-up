@@ -30,7 +30,8 @@ public:
     int get_damage() const;
 
 private:
-    void _update_current(sf::Time delta_time) override;
+    void _update_current(sf::Time delta_time,
+                         CommandQueue& command_queue) override;
 
     void _draw_current(sf::RenderTarget& target,
                        sf::RenderStates states) const override;

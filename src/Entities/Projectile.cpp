@@ -3,6 +3,7 @@
 #include "Game/DataTables.hpp"
 #include "Utility.hpp"
 
+using shootemup::CommandQueue;
 using shootemup::Entity;
 using shootemup::Projectile;
 using shootemup::ProjectileData;
@@ -16,17 +17,18 @@ Projectile::Projectile(Type type, const TextureHolder& textures)
       m_sprite{textures.get(m_data[shootemup::enum_to_int(type)].texture)}
 {
     center_origin(m_sprite);
-    set_velocity(sf::Vector2f(0.f, m_data[shootemup::enum_to_int(type)].speed));
+    set_velocity(
+        -sf::Vector2f(0.f, m_data[shootemup::enum_to_int(type)].speed));
 }
 
 uint32_t Projectile::get_category() const
 {
     if (m_type == Projectile::Type::AlliedBullet)
     {
-        return EntityCategory::AlliedProjectile;
+        return shootemup::enum_to_int(EntityCategory::AlliedProjectile);
     }
 
-    return EntityCategory::EnemyProjectile;
+    return shootemup::enum_to_int(EntityCategory::EnemyProjectile);
 }
 
 float Projectile::get_max_speed() const
@@ -39,9 +41,10 @@ int Projectile::get_damage() const
     return m_data[shootemup::enum_to_int(m_type)].damage;
 }
 
-void Projectile::_update_current(sf::Time delta_time)
+void Projectile::_update_current(sf::Time delta_time,
+                                 CommandQueue& command_queue)
 {
-    Entity::_update_current(delta_time);
+    Entity::_update_current(delta_time, command_queue);
 }
 
 void Projectile::_draw_current(sf::RenderTarget& target,

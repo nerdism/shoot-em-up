@@ -3,8 +3,17 @@
 #include <cassert>
 
 #include "Commands/Command.hpp"
+#include "Utility.hpp"
 
+using shootemup::CommandQueue;
+using shootemup::EntityCategory;
 using shootemup::SceneNode;
+
+SceneNode::SceneNode(EntityCategory type)
+    : m_parent{nullptr},
+      m_category{type}
+{
+}
 
 void SceneNode::attach_child(Ptr child)
 {
@@ -36,17 +45,18 @@ void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
     }
 }
 
-void SceneNode::update(sf::Time delta_time)
+void SceneNode::update(sf::Time delta_time, CommandQueue& command_queue)
 {
-    _update_current(delta_time);
-    _update_children(delta_time);
+    _update_current(delta_time, command_queue);
+    _update_children(delta_time, command_queue);
 }
 
-void SceneNode::_update_children(sf::Time delta_time)
+void SceneNode::_update_children(sf::Time delta_time,
+                                 CommandQueue& command_queue)
 {
     for (const auto& iter : m_children)
     {
-        iter->update(delta_time);
+        iter->update(delta_time, command_queue);
     }
 }
 
@@ -56,7 +66,7 @@ sf::Transform SceneNode::get_world_transform() const
 
     for (const SceneNode* node = this; node != nullptr; node = node->m_parent)
     {
-        transform = getTransform() * transform;
+        transform = node->getTransform() * transform;
     }
 
     return transform;
@@ -67,16 +77,19 @@ void SceneNode::_draw_current(sf::RenderTarget& target,
 {
 }
 
-void SceneNode::_update_current(sf::Time delta_time) {}
+void SceneNode::_update_current(sf::Time delta_time,
+                                CommandQueue& command_queue)
+{
+}
 
 sf::Vector2f SceneNode::get_world_position() const
 {
     return get_world_transform() * sf::Vector2f();
 }
 
-uint32_t SceneNode::get_category() const 
-{ 
-    return shootemup::EntityCategory::Scene; 
+uint32_t SceneNode::get_category() const
+{
+    return shootemup::enum_to_int(m_category);
 }
 
 void SceneNode::on_command(const Command& command, sf::Time delta_time)

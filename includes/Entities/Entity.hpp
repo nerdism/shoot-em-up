@@ -26,7 +26,8 @@ public:
     bool is_destroyed();
 
 protected:
-    void _update_current(sf::Time delta_time) override;
+    void _update_current(sf::Time delta_time,
+                         CommandQueue& command_queue) override;
 
 private:
     sf::Vector2f m_velocity;
