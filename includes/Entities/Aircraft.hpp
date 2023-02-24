@@ -38,6 +38,8 @@ public:
 
     void fire();
 
+    sf::FloatRect get_bounding_rect() const override;
+
 private:
     void _update_health_display();
 

@@ -38,6 +38,7 @@ void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
     states.transform *= getTransform();
 
     _draw_current(target, states);
+    draw_bounding_rect(target, states);
 
     for (const auto& iter : m_children)
     {
@@ -104,4 +105,29 @@ void SceneNode::on_command(const Command& command, sf::Time delta_time)
     {
         iter->on_command(command, delta_time);
     }
+}
+
+sf::FloatRect SceneNode::get_bounding_rect() const
+{
+    return sf::FloatRect();
+}
+
+void SceneNode::draw_bounding_rect(sf::RenderTarget& target,
+                                   sf::RenderStates states) const
+{
+    sf::FloatRect rect = get_bounding_rect();
+
+    sf::RectangleShape shape;
+    shape.setPosition(sf::Vector2f(rect.left, rect.top));
+    shape.setSize(sf::Vector2f(rect.width, rect.height));
+    shape.setFillColor(sf::Color::Transparent);
+    shape.setOutlineColor(sf::Color::Green);
+    shape.setOutlineThickness(1.f);
+
+    target.draw(shape);
+}
+
+bool shootemup::collision(const SceneNode& lhs, const SceneNode& rhs)
+{
+    return lhs.get_bounding_rect().intersects(rhs.get_bounding_rect());
 }

@@ -52,3 +52,9 @@ void Projectile::_draw_current(sf::RenderTarget& target,
 {
     target.draw(m_sprite, states);
 }
+
+sf::FloatRect Projectile::get_bounding_rect() const
+{
+    // TODO: did not understand this
+    return get_world_transform().transformRect(m_sprite.getGlobalBounds());
+}

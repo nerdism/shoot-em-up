@@ -133,3 +133,9 @@ void Aircraft::_create_projectile(SceneNode& node,
 
     node.attach_child(std::move(projectile));
 }
+
+sf::FloatRect Aircraft::get_bounding_rect() const
+{
+    // TODO: did not understand this
+    return get_world_transform().transformRect(m_sprite.getGlobalBounds());
+}

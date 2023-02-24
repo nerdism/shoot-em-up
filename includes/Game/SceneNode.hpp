@@ -43,6 +43,8 @@ public:
 
     void on_command(const Command& command, sf::Time delta_time);
 
+    virtual sf::FloatRect get_bounding_rect() const;
+
 protected:
     virtual void _update_current(sf::Time delta_time,
                                  CommandQueue& command_queue);
@@ -50,9 +52,14 @@ protected:
 private:
     void _update_children(sf::Time delta_time, CommandQueue& command_queue);
 
+    void draw_bounding_rect(sf::RenderTarget& target,
+                            sf::RenderStates states) const;
+
     std::vector<Ptr> m_children;
     SceneNode* m_parent;
     EntityCategory m_category;
 };
+
+bool collision(const SceneNode& lhs, const SceneNode& rhs);
 
 }  // namespace shootemup

@@ -29,6 +29,8 @@ public:
     float get_max_speed() const;
     int get_damage() const;
 
+    sf::FloatRect get_bounding_rect() const override;
+
 private:
     void _update_current(sf::Time delta_time,
                          CommandQueue& command_queue) override;
