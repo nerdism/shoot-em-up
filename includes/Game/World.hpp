@@ -30,6 +30,7 @@ private:
     void _build_scene();
     void _spawn_enemies();
     void _add_enemies();
+    void _handle_colissions();
     void _add_enemy(Aircraft::Type type, float x, float y);
 
     sf::FloatRect _get_view_bounds() const;
@@ -73,4 +74,7 @@ private:
 
     std::vector<SpawnPoint> m_enemy_spawn_points;
 };
+
+bool matches_category(SceneNode::Pair& colliders, uint32_t type1,
+                      uint32_t type2);
 }  // namespace shootemup

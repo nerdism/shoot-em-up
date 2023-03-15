@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <set>
 #include <vector>
 
 #include "Commands/Command.hpp"
@@ -17,6 +18,7 @@ class SceneNode : public sf::Drawable, public sf::Transformable
 {
 public:
     using Ptr = std::unique_ptr<SceneNode>;
+    using Pair = std::pair<SceneNode*, SceneNode*>;
 
     SceneNode(EntityCategory type = EntityCategory::None);
 
@@ -44,6 +46,16 @@ public:
     void on_command(const Command& command, sf::Time delta_time);
 
     virtual sf::FloatRect get_bounding_rect() const;
+
+    void check_node_colission(SceneNode& node, std::set<Pair>& colission_pairs);
+    void check_scene_colission(SceneNode& scene_graph,
+                               std::set<Pair>& colission_pairs);
+
+    void remove_destroyed_nodes();
+
+    virtual bool is_destroyed() const;
+
+    virtual bool is_marked_for_removal() const;
 
 protected:
     virtual void _update_current(sf::Time delta_time,

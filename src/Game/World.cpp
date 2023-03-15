@@ -1,8 +1,18 @@
 #include "Game/World.hpp"
 
-#include "Game/SpriteNode.hpp"
+#include <iostream>
+#include <set>
 
+#include "Entities/EntityCategory.hpp"
+#include "Entities/Projectile.hpp"
+#include "Game/SpriteNode.hpp"
+#include "Utility.hpp"
+
+using shootemup::Aircraft;
 using shootemup::CommandQueue;
+using shootemup::EntityCategory;
+using shootemup::Projectile;
+using shootemup::SceneNode;
 using shootemup::World;
 
 World::World(sf::RenderWindow& window, FontHolder& font_holder)
@@ -137,6 +147,10 @@ void World::update(sf::Time delta_time)
 
     m_player_aircraft->setPosition(position);
 
+    _handle_colissions();
+
+    m_scene_graph.remove_destroyed_nodes();
+
     m_scene_graph.update(delta_time, m_command_queue);
 
     _spawn_enemies();
@@ -202,4 +216,45 @@ void World::_add_enemy(Aircraft::Type type, float x, float y)
 {
     m_enemy_spawn_points.emplace_back(type, m_spawn_position.x + x,
                                       m_spawn_position.y - y);
+}
+
+void World::_handle_colissions()
+{
+    std::set<SceneNode::Pair> colission_pairs;
+    m_scene_graph.check_scene_colission(m_scene_graph, colission_pairs);
+
+    for (auto pair : colission_pairs)
+    {
+        if (matches_category(
+                pair, shootemup::enum_to_int(EntityCategory::EnemyAircraft),
+                shootemup::enum_to_int(EntityCategory::AlliedProjectile)))
+        {
+            auto projectile = static_cast<Projectile*>(pair.second);
+            auto enemy = static_cast<Aircraft*>(pair.first);
+            enemy->damage(projectile->get_damage());
+            projectile->destroy();
+        }
+    }
+}
+
+bool shootemup::matches_category(SceneNode::Pair& colliders, uint32_t type1,
+                                 uint32_t type2)
+{
+    const uint32_t category1 = colliders.first->get_category();
+    const uint32_t category2 = colliders.second->get_category();
+
+    // Make sure first pair entry has category type1 and second has type2
+    if ((type1 & category1) && (type2 & category2))
+    {
+        return true;
+    }
+    else if ((type1 & category2) && (type2 & category1))
+    {
+        std::swap(colliders.first, colliders.second);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }

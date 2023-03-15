@@ -1,5 +1,6 @@
 #include "Game/SceneNode.hpp"
 
+#include <algorithm>
 #include <cassert>
 
 #include "Commands/Command.hpp"
@@ -125,6 +126,58 @@ void SceneNode::draw_bounding_rect(sf::RenderTarget& target,
     shape.setOutlineThickness(1.f);
 
     target.draw(shape);
+}
+
+void SceneNode::check_node_colission(SceneNode& node,
+                                     std::set<Pair>& colission_pairs)
+{
+    if (this != &node && shootemup::collision(*this, node) && !is_destroyed() &&
+        !node.is_destroyed())
+    {
+        colission_pairs.insert(std::minmax(this, &node));
+    }
+    for (auto& child : m_children)
+    {
+        child->check_node_colission(node, colission_pairs);
+    }
+}
+
+void SceneNode::check_scene_colission(SceneNode& scene_graph,
+                                      std::set<Pair>& colission_pairs)
+{
+    check_node_colission(scene_graph, colission_pairs);
+
+    for (auto& child : scene_graph.m_children)
+    {
+        check_scene_colission(*child, colission_pairs);
+    }
+}
+
+void SceneNode::remove_destroyed_nodes()
+{
+    // std::find_if(m_children.begin(), m_children.end(),
+    //              [&](Ptr node) { node->is_marked_for_removal(); });
+    // Remove all children which request so
+    auto num = std::erase_if(
+        m_children, [](Ptr& child) { return child->is_marked_for_removal(); });
+
+    // Call function recursively for all remaining children
+    // std::for_each(m_children.begin(), m_children.end(),
+    //               [&](Ptr node) { node->remove_destroyed_nodes(); });
+    for (auto& child : m_children)
+    {
+        child->remove_destroyed_nodes();
+    }
+}
+
+bool SceneNode::is_destroyed() const
+{
+    return false;
+}
+
+bool SceneNode::is_marked_for_removal() const
+{
+    return is_destroyed();
 }
 
 bool shootemup::collision(const SceneNode& lhs, const SceneNode& rhs)
