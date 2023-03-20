@@ -54,7 +54,7 @@ std::uint32_t Entity::get_hitpoints()
     return m_hitpoints;
 }
 
-bool Entity::is_destroyed()
+bool Entity::is_destroyed() const
 {
     return m_hitpoints <= 0;
 }

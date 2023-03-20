@@ -23,7 +23,7 @@ public:
     void damage(std::uint32_t points);
     void destroy();
     std::uint32_t get_hitpoints();
-    bool is_destroyed();
+    bool is_destroyed() const override;
 
 protected:
     void _update_current(sf::Time delta_time,
