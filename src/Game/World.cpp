@@ -123,7 +123,7 @@ void World::update(sf::Time delta_time)
         m_command_queue.pop();
     }
 
-    sf::Vector2f velocity = m_player_aircraft->get_velocity();
+    const sf::Vector2f velocity = m_player_aircraft->get_velocity();
 
     if (velocity.x != 0.f && velocity.y != 0.f)
     {
@@ -132,7 +132,7 @@ void World::update(sf::Time delta_time)
 
     m_player_aircraft->accelerate(sf::Vector2f(0.f, m_scroll_speed));
 
-    sf::FloatRect view_bounds(
+    const sf::FloatRect view_bounds(
         m_world_view.getCenter() - m_world_view.getSize() / 2.f,
         m_world_view.getSize());
     const float border_distance = 40.f;
@@ -154,6 +154,8 @@ void World::update(sf::Time delta_time)
     m_scene_graph.update(delta_time, m_command_queue);
 
     _spawn_enemies();
+
+    _destroy_entities_outside_view();
 }
 
 CommandQueue& World::get_command_queue()
@@ -257,4 +259,21 @@ bool shootemup::matches_category(SceneNode::Pair& colliders, uint32_t type1,
     {
         return false;
     }
+}
+
+void World::_destroy_entities_outside_view()
+{
+    Command command;
+    command.category = enum_to_int(EntityCategory::Projectile) |
+                       enum_to_int(EntityCategory::EnemyAircraft);
+
+    command.action = derived_action<Entity>(
+        [&](Entity& e, sf::Time)
+        {
+            if (!_get_battlefield_bounds().intersects(e.get_bounding_rect()))
+            {
+                e.destroy();
+            }
+        });
+    m_command_queue.push(command);
 }

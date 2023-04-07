@@ -32,6 +32,7 @@ private:
     void _add_enemies();
     void _handle_colissions();
     void _add_enemy(Aircraft::Type type, float x, float y);
+    void _destroy_entities_outside_view();
 
     sf::FloatRect _get_view_bounds() const;
     sf::FloatRect _get_battlefield_bounds() const;
