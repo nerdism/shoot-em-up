@@ -18,12 +18,11 @@ enum class FontId
 enum class TextureId
 {
     TitleScreen,
-    Desert,
-    Airplane_Eagle,
-    Airplane_Raptor,
-    Airplane_Avenger,
-    Bullet,
-    Missile,
+    Jungle,
+    Entities,
+    Explosion,
+    Particle,
+    FinishLine,
     TypeCount
 };
 

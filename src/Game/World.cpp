@@ -33,18 +33,16 @@ World::World(sf::RenderWindow& window, FontHolder& font_holder)
 
 void World::_load_textures()
 {
+    m_texture_holder.load_compiled_resource(TextureId::Entities,
+                                            "resources/textures/Entities.png");
+    m_texture_holder.load_compiled_resource(TextureId::Explosion,
+                                            "resources/textures/Explosion.png");
     m_texture_holder.load_compiled_resource(
-        TextureId::Airplane_Eagle, "resources/images/gameplay/Eagle.png");
-    m_texture_holder.load_compiled_resource(
-        TextureId::Airplane_Raptor, "resources/images/gameplay/Raptor.png");
-    m_texture_holder.load_compiled_resource(
-        TextureId::Airplane_Avenger, "resources/images/gameplay/Avenger.png");
-    m_texture_holder.load_compiled_resource(
-        TextureId::Bullet, "resources/images/gameplay/Bullet.png");
-    m_texture_holder.load_compiled_resource(
-        TextureId::Missile, "resources/images/gameplay/Missile.png");
-    m_texture_holder.load_compiled_resource(
-        TextureId::Desert, "resources/images/gameplay/Desert.png");
+        TextureId::FinishLine, "resources/textures/FinishLine.png");
+    m_texture_holder.load_compiled_resource(TextureId::Jungle,
+                                            "resources/textures/Jungle.png");
+    m_texture_holder.load_compiled_resource(TextureId::Particle,
+                                            "resources/textures/Particle.png");
 }
 
 void World::_build_scene()
@@ -68,7 +66,7 @@ void World::_build_scene()
         m_scene_graph.attach_child(std::move(node));
     }
 
-    sf::Texture& texture = m_texture_holder.get(TextureId::Desert);
+    sf::Texture& texture = m_texture_holder.get(TextureId::Jungle);
     const sf::IntRect texture_rect(m_world_bounds);
     texture.setRepeated(true);
 

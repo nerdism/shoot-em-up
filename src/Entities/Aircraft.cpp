@@ -16,7 +16,8 @@ Aircraft::Aircraft(Type type, const TextureHolder& texture_holder,
                    const FontHolder& font_holder)
     : Entity{m_data[static_cast<std::uint32_t>(type)].hitpoints},
       m_sprite{
-          texture_holder.get(m_data[static_cast<std::uint32_t>(type)].texture)},
+          texture_holder.get(m_data[static_cast<std::uint32_t>(type)].texture),
+          m_data[static_cast<std::uint32_t>(type)].rect},
       m_fire_interval{m_data[static_cast<std::uint32_t>(type)].fireInterval},
       m_type{type},
       m_travelled_distance{0},

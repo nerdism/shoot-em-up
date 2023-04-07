@@ -29,6 +29,7 @@ struct AircraftData
     int hitpoints;
     float speed;
     TextureId texture;
+    sf::IntRect rect;
     sf::Time fireInterval;
     std::vector<Direction> directions;
 };
@@ -37,6 +38,7 @@ struct ProjectileData
 {
     int damage;
     float speed;
+    sf::IntRect rect;
     TextureId texture;
 };
 

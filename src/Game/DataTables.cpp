@@ -28,11 +28,13 @@ std::vector<AircraftData> shootemup::initialize_aircraft_data()
 
     data[eagle_index].hitpoints = 120;
     data[eagle_index].fireInterval = sf::seconds(0.3f);
-    data[eagle_index].texture = TextureId::Airplane_Eagle;
+    data[eagle_index].texture = TextureId::Entities;
+    data[eagle_index].rect = sf::IntRect(0, 0, 48, 64);
 
     data[raptor_index].hitpoints = 20;
     data[raptor_index].speed = 80.f;
-    data[raptor_index].texture = TextureId::Airplane_Raptor;
+    data[raptor_index].texture = TextureId::Entities;
+    data[raptor_index].rect = sf::IntRect(144, 0, 84, 64);
     data[raptor_index].directions.emplace_back(+45.f, 80.f);
     data[raptor_index].directions.emplace_back(-45.f, 160.f);
     data[raptor_index].directions.emplace_back(+45.f, 80.f);
@@ -40,7 +42,8 @@ std::vector<AircraftData> shootemup::initialize_aircraft_data()
 
     data[avenger_index].hitpoints = 40;
     data[avenger_index].speed = 50.f;
-    data[avenger_index].texture = TextureId::Airplane_Avenger;
+    data[avenger_index].texture = TextureId::Entities;
+    data[avenger_index].rect = sf::IntRect(228, 0, 60, 59);
     data[avenger_index].directions.emplace_back(+45.f, 50.f);
     data[avenger_index].directions.emplace_back(0.f, 50.f);
     data[avenger_index].directions.emplace_back(-45.f, 100.f);
@@ -61,15 +64,18 @@ std::vector<ProjectileData> shootemup::initialize_projectile_data()
 
     data[allied_index].damage = 10;
     data[allied_index].speed = 300.f;
-    data[allied_index].texture = TextureId::Bullet;
+    data[allied_index].texture = TextureId::Entities;
+    data[allied_index].rect = sf::IntRect(175, 64, 3, 14);
 
     data[enemy_index].damage = 10;
     data[enemy_index].speed = 300.f;
-    data[enemy_index].texture = TextureId::Bullet;
+    data[enemy_index].texture = TextureId::Entities;
+    data[enemy_index].rect = sf::IntRect(175, 64, 3, 14);
 
     data[missile_index].damage = 200;
     data[missile_index].speed = 150.f;
-    data[missile_index].texture = TextureId::Missile;
+    data[missile_index].texture = TextureId::Entities;
+    data[missile_index].rect = sf::IntRect(160, 64, 15, 32);
 
     return data;
 }

@@ -14,7 +14,8 @@ const std::vector<ProjectileData> Projectile::m_data =
 Projectile::Projectile(Type type, const TextureHolder& textures)
     : Entity{1},
       m_type{type},
-      m_sprite{textures.get(m_data[shootemup::enum_to_int(type)].texture)}
+      m_sprite{textures.get(m_data[shootemup::enum_to_int(type)].texture),
+               m_data[shootemup::enum_to_int(type)].rect}
 {
     center_origin(m_sprite);
     set_velocity(

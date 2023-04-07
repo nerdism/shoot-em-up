@@ -39,7 +39,7 @@ void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
     states.transform *= getTransform();
 
     _draw_current(target, states);
-    draw_bounding_rect(target, states);
+    // draw_bounding_rect(target, states);
 
     for (const auto& iter : m_children)
     {
