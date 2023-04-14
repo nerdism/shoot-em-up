@@ -10,6 +10,10 @@
       "name": "cmakerc",
       "version>=": "2021-08-27#1"
     },
+    {
+      "name": "entt",
+      "version>=": "3.10.1"
+    },
     "tgui"
   ],
   "builtin-baseline": "e9d35a26f8081ab88035a1c8d9af38c27b52d135"
