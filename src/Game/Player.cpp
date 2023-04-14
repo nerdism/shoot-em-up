@@ -87,23 +87,6 @@ void Player::handle_realtime_input(CommandQueue& commands)
             commands.push(m_action_bindings[key_binding.second]);
         }
     }
-    // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    //{
-    //     Command move_left;
-    //     move_left.category = shootemup::EntityCategory::PlayerAircraft;
-    //     move_left.action =
-    //         derived_action<Aircraft>(AircraftMover(-player_speed, 0.f));
-    //     commands.push(move_left);
-    // }
-
-    // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-    //{
-    //     Command move_forward;
-    //     move_forward.category = shootemup::EntityCategory::PlayerAircraft;
-    //     move_forward.action =
-    //         derived_action<Aircraft>(AircraftMover(0, -player_speed));
-    //     commands.push(move_forward);
-    // }
 }
 
 sf::Keyboard::Key Player::get_assigned_key(Action action) const

@@ -15,7 +15,8 @@ using shootemup::Projectile;
 using shootemup::SceneNode;
 using shootemup::World;
 
-World::World(sf::RenderWindow& window, FontHolder& font_holder)
+World::World(sf::RenderWindow& window, TextureHolder& texture_holder,
+             FontHolder& font_holder)
     : m_window{window},
       m_world_view{window.getDefaultView()},
       m_world_bounds{0, 0, m_world_view.getSize().x, 2000.f},
@@ -23,26 +24,12 @@ World::World(sf::RenderWindow& window, FontHolder& font_holder)
                        m_world_bounds.height - m_world_view.getSize().y / 2.f},
       m_player_aircraft{nullptr},
       m_scroll_speed{-50.f},
+      m_texture_holder{texture_holder},
       m_font_holder{font_holder}
 {
-    _load_textures();
     _build_scene();
 
     m_world_view.setCenter(m_spawn_position);
-}
-
-void World::_load_textures()
-{
-    m_texture_holder.load_compiled_resource(TextureId::Entities,
-                                            "resources/textures/Entities.png");
-    m_texture_holder.load_compiled_resource(TextureId::Explosion,
-                                            "resources/textures/Explosion.png");
-    m_texture_holder.load_compiled_resource(
-        TextureId::FinishLine, "resources/textures/FinishLine.png");
-    m_texture_holder.load_compiled_resource(TextureId::Jungle,
-                                            "resources/textures/Jungle.png");
-    m_texture_holder.load_compiled_resource(TextureId::Particle,
-                                            "resources/textures/Particle.png");
 }
 
 void World::_build_scene()
@@ -91,17 +78,6 @@ void World::_build_scene()
 
     m_scene_layers[air_index]->attach_child(std::move(leader));
 
-    /*
-    std::unique_ptr<Aircraft> left_escort =
-        std::make_unique<Aircraft>(Aircraft::Type::Raptor, m_texture_holder);
-    left_escort->setPosition(-80.f, 50.f);
-    m_player_aircraft->attach_child(std::move(left_escort));
-
-    std::unique_ptr<Aircraft> right_escort =
-        std::make_unique<Aircraft>(Aircraft::Type::Raptor, m_texture_holder);
-    right_escort->setPosition(80.f, 50.f);
-    m_player_aircraft->attach_child(std::move(right_escort));
-    */
     _add_enemies();
 }
 

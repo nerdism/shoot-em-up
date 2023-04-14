@@ -4,7 +4,7 @@ using shootemup::GamePlayState;
 
 GamePlayState::GamePlayState(StateStack& stack, Context context)
     : State{stack, context},
-      m_world{*context.window, *context.fonts},
+      m_world{*context.window, *context.textures, *context.fonts},
       m_player{*context.player}
 {
 }

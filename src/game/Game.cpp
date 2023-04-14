@@ -27,12 +27,8 @@ Game::Game(const uint32_t screen_width, const uint32_t screen_height,
     m_window.setFramerateLimit(framerate);
     m_gui.setTarget(m_window);
 
-    m_texture_holder.load_compiled_resource(
-        TextureId::TitleScreen, "resources/images/menu/TitleScreen.png");
-
-    m_font_holder.load_compiled_resource(
-        FontId::Main, "resources/gui-theme/kenvector_future.ttf");
-
+    _load_textures();
+    _load_fonts();
     _register_states();
 
     m_state_stack.push_state(GameState::GamePlay);
@@ -86,10 +82,32 @@ void Game::_render()
     m_window.display();
 }
 
+void Game::_load_textures()
+{
+    m_texture_holder.load_compiled_resource(
+        TextureId::TitleScreen, "resources/images/menu/TitleScreen.png");
+    m_texture_holder.load_compiled_resource(TextureId::Entities,
+                                            "resources/textures/Entities.png");
+    m_texture_holder.load_compiled_resource(TextureId::Explosion,
+                                            "resources/textures/Explosion.png");
+    m_texture_holder.load_compiled_resource(
+        TextureId::FinishLine, "resources/textures/FinishLine.png");
+    m_texture_holder.load_compiled_resource(TextureId::Jungle,
+                                            "resources/textures/Jungle.png");
+    m_texture_holder.load_compiled_resource(TextureId::Particle,
+                                            "resources/textures/Particle.png");
+}
+
 void Game::_register_states()
 {
     m_state_stack.register_state<GamePlayState>(GameState::GamePlay);
     m_state_stack.register_state<TitleState>(GameState::Title);
     m_state_stack.register_state<MenuState>(GameState::Menu);
     m_state_stack.register_state<PauseState>(GameState::Pause);
+}
+
+void Game::_load_fonts()
+{
+    m_font_holder.load_compiled_resource(
+        FontId::Main, "resources/gui-theme/kenvector_future.ttf");
 }

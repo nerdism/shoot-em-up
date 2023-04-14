@@ -17,7 +17,8 @@ public:
     World(const World& world) = delete;
     World& operator=(const World& world) = delete;
 
-    World(sf::RenderWindow& window, FontHolder& font_holder);
+    World(sf::RenderWindow& window, TextureHolder& texture_holder,
+          FontHolder& font_holder);
 
     CommandQueue& get_command_queue();
 
@@ -26,7 +27,6 @@ public:
     void draw();
 
 private:
-    void _load_textures();
     void _build_scene();
     void _spawn_enemies();
     void _add_enemies();
@@ -61,7 +61,7 @@ private:
     sf::RenderWindow& m_window;
     sf::View m_world_view;
 
-    TextureHolder m_texture_holder;
+    TextureHolder& m_texture_holder;
     FontHolder& m_font_holder;
     SceneNode m_scene_graph;
     std::array<SceneNode*, static_cast<uint32_t>(SceneLayer::LayerCount)>

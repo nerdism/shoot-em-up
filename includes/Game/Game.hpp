@@ -30,6 +30,10 @@ private:
 
     void _register_states();
 
+    void _load_textures();
+
+    void _load_fonts();
+
     sf::RenderWindow m_window;
     TextureHolder m_texture_holder;
     FontHolder m_font_holder;
