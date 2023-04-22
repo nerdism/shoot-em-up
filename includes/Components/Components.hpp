@@ -15,12 +15,4 @@ public:
     sf::Sprite sprite;
 };
 
-class AircraftComp
-{
-};
-
-class PlayerAircraftComp
-{
-};
-
 }  // namespace shootemup

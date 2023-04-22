@@ -96,11 +96,11 @@ uint32_t SceneNode::get_category() const
 
 void SceneNode::on_command(const Command& command, sf::Time delta_time)
 {
-    const uint32_t and_result = command.category & get_category();
-    if (static_cast<bool>(and_result))
-    {
-        command.action(*this, delta_time);
-    }
+    // const uint32_t and_result = command.category & get_category();
+    // if (static_cast<bool>(and_result))
+    // {
+    //     command.action(*this, delta_time);
+    // }
 
     for (const auto& iter : m_children)
     {

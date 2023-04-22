@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <cassert>
+#include <entt/entt.hpp>
 #include <functional>
 
 #include "Game/SceneNode.hpp"
@@ -14,19 +15,7 @@ class SceneNode;
 class Command
 {
 public:
-    std::function<void(SceneNode&, sf::Time)> action;
-    uint32_t category;
+    std::function<void(entt::registry&, sf::Time)> action;
 };
-
-template <typename GameObject, typename Function>
-std::function<void(SceneNode&, sf::Time)> derived_action(Function fn)
-{
-    return [=](SceneNode& node, sf::Time delta_time)
-    {
-        assert(dynamic_cast<GameObject*>(&node) != nullptr);
-
-        fn(static_cast<GameObject&>(node), delta_time);
-    };
-}
 
 }  // namespace shootemup

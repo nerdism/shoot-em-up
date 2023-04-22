@@ -5,15 +5,11 @@
 #include <set>
 
 #include "Components/Components.hpp"
-#include "Entities/EntityCategory.hpp"
-#include "Entities/Projectile.hpp"
+#include "Components/Tags.hpp"
 #include "Game/SpriteNode.hpp"
 #include "Utility.hpp"
 
-using shootemup::Aircraft;
 using shootemup::CommandQueue;
-using shootemup::EntityCategory;
-using shootemup::Projectile;
 using shootemup::SceneNode;
 using shootemup::World;
 
@@ -31,17 +27,20 @@ World::World(sf::RenderWindow& window, TextureHolder& texture_holder,
     registry.emplace<GameEntityComp>(player,
                                      m_texture_holder.get(TextureId::Entities),
                                      sf::IntRect(0, 0, 48, 64));
-    registry.emplace<AircraftComp>(player);
-    registry.emplace<PlayerAircraftComp>(player);
+    registry.emplace<tag::AirLayer>(player);
+    registry.emplace<tag::Aircraft>(player);
+    registry.emplace<tag::PlayerAircraft>(player);
 }
 
 void World::draw()
 {
     sf::RenderStates render_states = sf::RenderStates::Default;
-    auto view = registry.view<GameEntityComp>();
+
+    auto view = registry.view<tag::PlayerAircraft>();
+
     for (auto entity : view)
     {
-        auto& game_entity = view.get<GameEntityComp>(entity);
+        auto& game_entity = registry.get<GameEntityComp>(entity);
         render_states.transform *= game_entity.getTransform();
         m_window.draw(game_entity.sprite, render_states);
     }
@@ -49,11 +48,11 @@ void World::draw()
 
 void World::update(sf::Time delta_time)
 {
-    auto view = registry.view<GameEntityComp>();
-    for (auto entity : view)
+    while (!m_command_queue.empty())
     {
-        auto& game_entity = view.get<GameEntityComp>(entity);
-        game_entity.move(sf::Vector2f(0.f, 1.f));
+        const Command& command = m_command_queue.front();
+        command.action(registry, delta_time);
+        m_command_queue.pop();
     }
 }
 

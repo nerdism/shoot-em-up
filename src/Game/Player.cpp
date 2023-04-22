@@ -1,13 +1,17 @@
 #include "Game/Player.hpp"
 
+#include <entt/entt.hpp>
 #include <iostream>
 
+#include "Components/Components.hpp"
+#include "Components/Tags.hpp"
 #include "Entities/Aircraft.hpp"
 #include "Game/SceneNode.hpp"
 #include "SFML/Graphics.hpp"
 #include "Utility.hpp"
 
 using shootemup::Aircraft;
+using shootemup::GameEntityComp;
 using shootemup::Player;
 
 class AircraftMover
@@ -39,24 +43,50 @@ Player::Player()
     const float player_speed = 200.f;
 
     m_action_bindings[Action::MoveLeft].action =
-        derived_action<Aircraft>(AircraftMover(-player_speed, 0.f));
-    m_action_bindings[Action::MoveRight].action =
-        derived_action<Aircraft>(AircraftMover(+player_speed, 0.f));
-    m_action_bindings[Action::MoveUp].action =
-        derived_action<Aircraft>(AircraftMover(0.f, -player_speed));
-    m_action_bindings[Action::MoveDown].action =
-        derived_action<Aircraft>(AircraftMover(0.f, +player_speed));
-
-    for (auto& action_binding : m_action_bindings)
+        [](entt::registry& registry, sf::Time delta_time)
     {
-        action_binding.second.category =
-            shootemup::enum_to_int(EntityCategory::PlayerAircraft);
-    }
+        auto view = registry.view<tag::PlayerAircraft>();
+        for (auto entity : view)
+        {
+            GameEntityComp& game_entity = registry.get<GameEntityComp>(entity);
+            game_entity.move(-1.f, 0.f);
+        }
+    };
 
-    m_action_bindings[Action::ShootBullet].category =
-        shootemup::enum_to_int(EntityCategory::PlayerAircraft);
-    m_action_bindings[Action::ShootBullet].action = derived_action<Aircraft>(
-        [](Aircraft& aircraft, sf::Time /*delta_time*/) { aircraft.fire(); });
+    m_action_bindings[Action::MoveRight].action =
+        [](entt::registry& registry, sf::Time delta_time)
+    {
+        auto view = registry.view<tag::PlayerAircraft>();
+        for (auto entity : view)
+        {
+            GameEntityComp& game_entity = registry.get<GameEntityComp>(entity);
+            game_entity.move(1.f, 0.f);
+        }
+    };
+    m_action_bindings[Action::MoveUp].action =
+        [](entt::registry& registry, sf::Time delta_time)
+    {
+        auto view = registry.view<tag::PlayerAircraft>();
+        for (auto entity : view)
+        {
+            GameEntityComp& game_entity = registry.get<GameEntityComp>(entity);
+            game_entity.move(0.f, -1.f);
+        }
+    };
+    m_action_bindings[Action::MoveDown].action =
+        [](entt::registry& registry, sf::Time delta_time)
+    {
+        auto view = registry.view<tag::PlayerAircraft>();
+        for (auto entity : view)
+        {
+            GameEntityComp& game_entity = registry.get<GameEntityComp>(entity);
+            game_entity.move(0.f, 1.f);
+        }
+    };
+
+    // m_action_bindings[Action::ShootBullet].action = derived_action<Aircraft>(
+    //     [](Aircraft& aircraft, sf::Time /*delta_time*/) { aircraft.fire();
+    //     });
 }
 
 void Player::handle_event(const sf::Event& event, CommandQueue& commands)
@@ -64,14 +94,12 @@ void Player::handle_event(const sf::Event& event, CommandQueue& commands)
     if (event.type == sf::Event::KeyPressed &&
         event.key.code == sf::Keyboard::P)
     {
-        Command output;
-        output.category =
-            shootemup::enum_to_int(shootemup::EntityCategory::PlayerAircraft);
-        output.action = [](SceneNode& s, sf::Time) {
-            std::cout << s.getPosition().x << ", " << s.getPosition().y
-                      << std::endl;
-        };
-        commands.push(output);
+        // Command output;
+        // output.action = [](SceneNode& s, sf::Time) {
+        //     std::cout << s.getPosition().x << ", " << s.getPosition().y
+        //               << std::endl;
+        // };
+        // commands.push(output);
     }
 }
 
