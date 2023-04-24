@@ -27,20 +27,24 @@ World::World(sf::RenderWindow& window, TextureHolder& texture_holder,
     registry.emplace<GameEntityComp>(player,
                                      m_texture_holder.get(TextureId::Entities),
                                      sf::IntRect(0, 0, 48, 64));
-    registry.emplace<tag::AirLayer>(player);
+    registry.emplace<tag::AirLayerEntity>(player);
     registry.emplace<tag::Aircraft>(player);
     registry.emplace<tag::PlayerAircraft>(player);
+
+    m_world_view.setCenter(0, 0);
 }
 
 void World::draw()
 {
+    m_window.setView(m_world_view);
+
     sf::RenderStates render_states = sf::RenderStates::Default;
 
-    auto view = registry.view<tag::PlayerAircraft>();
+    auto view = registry.view<GameEntityComp>();
 
     for (auto entity : view)
     {
-        auto& game_entity = registry.get<GameEntityComp>(entity);
+        auto& game_entity = view.get<GameEntityComp>(entity);
         render_states.transform *= game_entity.getTransform();
         m_window.draw(game_entity.sprite, render_states);
     }
