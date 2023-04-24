@@ -9,7 +9,7 @@ namespace tag
 {
 using namespace entt::literals;
 
-using AirLayer = entt::tag<"air layer drawable entities"_hs>;
+using AirLayerEntity = entt::tag<"air layer drawable entities"_hs>;
 using BackgroundLayer = entt::tag<"Background layer drawable entities"_hs>;
 
 using Aircraft = entt::tag<"aircraft"_hs>;
