@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <entt/entt.hpp>
+#include <vector>
 
 namespace shootemup
 {
@@ -13,6 +15,13 @@ public:
         sprite.setTextureRect(texture_rect);
     }
     sf::Sprite sprite;
+};
+
+class SceneNodeComp
+{
+public:
+    entt::entity parent;
+    std::vector<entt::entity> children;
 };
 
 }  // namespace shootemup

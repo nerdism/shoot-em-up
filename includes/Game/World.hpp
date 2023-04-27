@@ -28,6 +28,10 @@ public:
     void draw();
 
 private:
+    void _build_scene();
+
+    entt::registry m_registry;
+
     sf::RenderWindow& m_window;
     sf::View m_world_view;
 
