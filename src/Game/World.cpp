@@ -25,10 +25,10 @@ World::World(sf::RenderWindow& window, TextureHolder& texture_holder,
 
     // Create player aircraft
     auto player = m_registry.create();
-    m_registry.emplace<GameEntityComp>(
+    m_registry.emplace<SpriteComponent>(
         player, m_texture_holder.get(TextureId::Entities),
         sf::IntRect(0, 0, 48, 64));
-    m_registry.emplace<SceneNodeComp>(player);
+    m_registry.emplace<SceneNodeComponent>(player);
     m_registry.emplace<tag::AirLayerEntity>(player);
     m_registry.emplace<tag::Aircraft>(player);
     m_registry.emplace<tag::PlayerAircraft>(player);
@@ -37,12 +37,27 @@ World::World(sf::RenderWindow& window, TextureHolder& texture_holder,
         m_registry.view<tag::AirLayerScenenNode>()[0];
 
     auto player_entity = m_registry.view<tag::PlayerAircraft>()[0];
-    SceneNodeComp& player_node = m_registry.get<SceneNodeComp>(player_entity);
-    SceneNodeComp& air_node =
-        m_registry.get<SceneNodeComp>(air_layer_scene_node_entity);
+    SceneNodeComponent& player_node =
+        m_registry.get<SceneNodeComponent>(player_entity);
+    SceneNodeComponent& air_node =
+        m_registry.get<SceneNodeComponent>(air_layer_scene_node_entity);
     air_node.children.push_back(player_entity);
 
     player_node.parent = air_layer_scene_node_entity;
+
+    auto health_text_entity = m_registry.create();
+
+    m_registry.emplace<TextComponent>(health_text_entity,
+                                      m_font_holder.get(FontId::Main), "xx Hp");
+
+    m_registry.emplace<SceneNodeComponent>(health_text_entity);
+
+    SceneNodeComponent& health_text_node =
+        m_registry.get<SceneNodeComponent>(health_text_entity);
+
+    health_text_node.parent = player_entity;
+
+    player_node.children.push_back(health_text_entity);
 }
 
 void World::draw()
@@ -51,16 +66,24 @@ void World::draw()
     std::function<void(entt::entity, sf::RenderStates)> draw_nodes =
         [&](entt::entity entity, sf::RenderStates render_states)
     {
-        if (m_registry.all_of<GameEntityComp>(entity))
+        if (m_registry.all_of<SpriteComponent>(entity))
         {
-            auto game_entity = m_registry.get<GameEntityComp>(entity);
+            auto game_entity = m_registry.get<SpriteComponent>(entity);
 
             render_states.transform *= game_entity.getTransform();
 
             m_window.draw(game_entity.sprite, render_states);
         }
+        else if (m_registry.all_of<TextComponent>(entity))
+        {
+            auto text_entity = m_registry.get<TextComponent>(entity);
 
-        auto scene_node = m_registry.get<SceneNodeComp>(entity);
+            render_states.transform *= text_entity.getTransform();
+
+            m_window.draw(text_entity.text, render_states);
+        }
+
+        auto scene_node = m_registry.get<SceneNodeComponent>(entity);
 
         for (auto child_entity : scene_node.children)
         {
@@ -91,34 +114,34 @@ void World::_build_scene()
 {
     // Create root scene node
     auto root_scene_node_entity = m_registry.create();
-    m_registry.emplace<SceneNodeComp>(root_scene_node_entity);
+    m_registry.emplace<SceneNodeComponent>(root_scene_node_entity);
     m_registry.emplace<tag::RootSceneNode>(root_scene_node_entity);
 
     // Create backgroun scene node
     auto background_layer_scene_node_entity = m_registry.create();
-    m_registry.emplace<SceneNodeComp>(background_layer_scene_node_entity);
-    SceneNodeComp& background_node =
-        m_registry.get<SceneNodeComp>(background_layer_scene_node_entity);
+    m_registry.emplace<SceneNodeComponent>(background_layer_scene_node_entity);
+    SceneNodeComponent& background_node =
+        m_registry.get<SceneNodeComponent>(background_layer_scene_node_entity);
     background_node.parent = root_scene_node_entity;
 
-    // Mark this node so that later attack node to it easier instead of begining
+    // Mark this node so that later attach node to it easier instead of begining
     // from root node
     m_registry.emplace<tag::BackgroundLayerScenenNode>(
         background_layer_scene_node_entity);
 
     // Create air scene node
     auto air_layer_scene_node_entity = m_registry.create();
-    m_registry.emplace<SceneNodeComp>(air_layer_scene_node_entity);
-    SceneNodeComp& air_node =
-        m_registry.get<SceneNodeComp>(air_layer_scene_node_entity);
+    m_registry.emplace<SceneNodeComponent>(air_layer_scene_node_entity);
+    SceneNodeComponent& air_node =
+        m_registry.get<SceneNodeComponent>(air_layer_scene_node_entity);
     air_node.parent = root_scene_node_entity;
 
-    // Mark this node so that later attack node to it easier instead of begining
+    // Mark this node so that later attach node to it easier instead of begining
     // from root node
     m_registry.emplace<tag::AirLayerScenenNode>(air_layer_scene_node_entity);
 
-    SceneNodeComp& root_node =
-        m_registry.get<SceneNodeComp>(root_scene_node_entity);
+    SceneNodeComponent& root_node =
+        m_registry.get<SceneNodeComponent>(root_scene_node_entity);
     root_node.children.push_back(background_layer_scene_node_entity);
     root_node.children.push_back(air_layer_scene_node_entity);
 }

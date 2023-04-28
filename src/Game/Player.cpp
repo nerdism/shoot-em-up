@@ -11,8 +11,8 @@
 #include "Utility.hpp"
 
 using shootemup::Aircraft;
-using shootemup::GameEntityComp;
 using shootemup::Player;
+using shootemup::SpriteComponent;
 
 class AircraftMover
 {
@@ -48,7 +48,8 @@ Player::Player()
         auto view = registry.view<tag::PlayerAircraft>();
         for (auto entity : view)
         {
-            GameEntityComp& game_entity = registry.get<GameEntityComp>(entity);
+            SpriteComponent& game_entity =
+                registry.get<SpriteComponent>(entity);
             game_entity.move(-1.f, 0.f);
         }
     };
@@ -59,7 +60,8 @@ Player::Player()
         auto view = registry.view<tag::PlayerAircraft>();
         for (auto entity : view)
         {
-            GameEntityComp& game_entity = registry.get<GameEntityComp>(entity);
+            SpriteComponent& game_entity =
+                registry.get<SpriteComponent>(entity);
             game_entity.move(1.f, 0.f);
         }
     };
@@ -69,7 +71,8 @@ Player::Player()
         auto view = registry.view<tag::PlayerAircraft>();
         for (auto entity : view)
         {
-            GameEntityComp& game_entity = registry.get<GameEntityComp>(entity);
+            SpriteComponent& game_entity =
+                registry.get<SpriteComponent>(entity);
             game_entity.move(0.f, -1.f);
         }
     };
@@ -79,7 +82,8 @@ Player::Player()
         auto view = registry.view<tag::PlayerAircraft>();
         for (auto entity : view)
         {
-            GameEntityComp& game_entity = registry.get<GameEntityComp>(entity);
+            SpriteComponent& game_entity =
+                registry.get<SpriteComponent>(entity);
             game_entity.move(0.f, 1.f);
         }
     };
