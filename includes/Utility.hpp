@@ -15,5 +15,6 @@ constexpr auto enum_to_int(EnumType enum_name) noexcept
 }
 
 void center_origin(sf::Sprite& sprite);
+void center_origin(sf::Text& text);
 
 }  // namespace shootemup
