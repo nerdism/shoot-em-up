@@ -28,7 +28,7 @@ World::World(sf::RenderWindow& window, TextureHolder& texture_holder,
     m_registry.emplace<SpriteComponent>(
         player, m_texture_holder.get(TextureId::Entities),
         sf::IntRect(0, 0, 48, 64));
-    m_registry.emplace<SceneNodeComponent>(player);
+    SceneNodeComponent player_scene_node;
     m_registry.emplace<tag::AirLayerEntity>(player);
     m_registry.emplace<tag::Aircraft>(player);
     m_registry.emplace<tag::PlayerAircraft>(player);
@@ -36,28 +36,27 @@ World::World(sf::RenderWindow& window, TextureHolder& texture_holder,
     auto air_layer_scene_node_entity =
         m_registry.view<tag::AirLayerScenenNode>()[0];
 
-    auto player_entity = m_registry.view<tag::PlayerAircraft>()[0];
-    SceneNodeComponent& player_node =
-        m_registry.get<SceneNodeComponent>(player_entity);
     SceneNodeComponent& air_node =
         m_registry.get<SceneNodeComponent>(air_layer_scene_node_entity);
-    air_node.children.push_back(player_entity);
 
-    player_node.parent = air_layer_scene_node_entity;
+    air_node.children.push_back(player);
+
+    player_scene_node.parent = air_layer_scene_node_entity;
 
     auto health_text_entity = m_registry.create();
 
     m_registry.emplace<TextComponent>(health_text_entity,
                                       m_font_holder.get(FontId::Main), "xx Hp");
 
-    m_registry.emplace<SceneNodeComponent>(health_text_entity);
+    SceneNodeComponent health_text_scene_node;
 
-    SceneNodeComponent& health_text_node =
-        m_registry.get<SceneNodeComponent>(health_text_entity);
+    health_text_scene_node.parent = player;
 
-    health_text_node.parent = player_entity;
+    player_scene_node.children.push_back(health_text_entity);
 
-    player_node.children.push_back(health_text_entity);
+    m_registry.emplace<SceneNodeComponent>(health_text_entity,
+                                           health_text_scene_node);
+    m_registry.emplace<SceneNodeComponent>(player, player_scene_node);
 }
 
 void World::draw()
