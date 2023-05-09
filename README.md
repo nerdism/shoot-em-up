@@ -1,21 +1,84 @@
-# shoot-em-up
-ShootEmUp game from sfml game development book by Jan Haller, Henrik Vogelius Hansson, Artur Moreira 
-<br>
-my aim is to create games and get better in c++ so I'm reading sfml game development book and 
-implementing the game mentioned on that book after I implemented the basic game I will refactor the code and add other libraries like thor, tgui, box2d, in order to have a engine or a framework so that I can create other games with it.
+# TexturePacker Importer
 
-## Road Map
-- [ ] copy ShootEmUp game from sfml book.
-- [ ] Refactor using the thor library.
-- [ ] Refactor using the tgui library.
-- [ ] Replace box2d for colission handling.
-- [ ] ReImplement using entt library.
-- [ ] Add modding support with lua or python if possible.
-- [ ] seperate the engine and game code.
-- [ ] make another repo for engine.
+This is a plugin for [Godot Engine](https://godotengine.org) to import
+`TileSet`s and `AtlasTexture`s from the [TexturePacker](https://www.codeandweb.com/texturepacker)
+
+**Note: This is compatible with Godot 4.0 beta 2 and newer.**
+
+Use the version from the **godot-3** branch if your are usin g Godot 3.
 
 
-![alt text](https://github.com/nerdism/shoot-em-up/blob/main/readme_resources/shootemup.png)
+## Installation
 
-<br>
-original repository of the book: [Sfml Game development book github](https://github.com/SFML/SFML-Game-Development-Book)
+Simply download it from [Godot Asset Library](https://godotengine.org/asset-library/asset/169)
+
+Alternatively, download or clone this repository and copy the contents of the
+`addons` folder to your own project's `addons` folder.
+
+**Important**: Enable the plugin on the Project Settings.
+
+## Features
+
+* Import sprite sheets as AtlasTextures / Sprite sheets
+* Supports trimmed sprites (margin)
+* Supports MultiPack
+
+## Usage (once the plugin is enabled)
+
+1. Create a sprite sheet in TexturePacker
+2. Save the image and .tpsheet file in the godot asset folder
+3. Watch Godot import it automatically.
+
+
+## Known issues
+
+### Currently no TileSet support
+
+The importer does currently not work with TileSets. Godot 3 had an API where a tile could be retrieved by its name. This is no longer supported in Godot 4.
+
+An option might be to create a file containing the name -> ID resolution. With this, it would be possible to update tile coordinates in the atlas.
+
+
+# Release notes
+
+## 4.0.1 (2022-10-13)
+
+* The plugin now works with Godot 4 beta 2
+
+
+## 4.0.0 (2022-10-04)
+
+* The plugin now works with Godot 4
+* The old version working with Godot 3 is now on the godot-3 branch
+
+## 1.0.5 (2020-06-16)
+
+* Fixed syntax to support Godot 3.2.2
+* Fixed memory leak (thanks @2shady4u)
+* Support additional image formats: webp, pvr, tga (thanks @AntonSalazar)
+* Renamed **master** branch to **main**
+
+## 1.0.4 (2018-12-11)
+
+* Fixed syntax to support Godot 3.1
+
+## 1.0.3 (2018-10-05)
+
+* Reduced memory usage during import
+
+## 1.0.2 (2018-04-18)
+
+* Sprite sheets can now be placed in sub folders
+
+## 1.0.1 (2018-03-14)
+
+* Fixed order of import to prevent "No loader found on resources" error
+
+## 1.0.0 (2018-03-12)
+
+* Initial release
+
+
+## License
+
+[MIT License](LICENSE). Copyright (c) 2018 Andreas Loew / CodeAndWeb GmbH

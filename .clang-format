@@ -1,9 +1,0 @@
----
-Language:        Cpp
-BasedOnStyle: Google
-IndentWidth:     4
-BreakBeforeBraces: Allman
-AccessModifierOffset: -4
-PackConstructorInitializers: Never
-AllowShortFunctionsOnASingleLine: None
-...

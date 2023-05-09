@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://dddvprbc63dh5"]
+
+[ext_resource type="Texture2D" uid="uid://btq3froj58atw" path="res://textures/Entities.png" id="1_wblab"]
+[ext_resource type="Script" path="res://player.gd" id="1_x0upp"]
+[ext_resource type="PackedScene" uid="uid://c4860cjjg7k0s" path="res://bullet.tscn" id="2_2ae3k"]
+[ext_resource type="AudioStream" uid="uid://bn1omch3yyc2k" path="res://sounds/gameplay/AlliedGunfire.wav" id="4_kmkjy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qmfvh"]
+size = Vector2(48, 65)
+
+[node name="Player" type="Area2D"]
+position = Vector2(268, 272)
+script = ExtResource("1_x0upp")
+BulletScene = ExtResource("2_2ae3k")
+metadata/_edit_group_ = true
+
+[node name="AirplaneSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_wblab")
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 63.2419)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_qmfvh")
+
+[node name="FireBulletSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_kmkjy")
+
+[node name="HealthLabel" type="Label" parent="."]
+offset_left = -22.0
+offset_top = 35.0
+offset_right = 21.0
+offset_bottom = 61.0
+text = "10 hp"
