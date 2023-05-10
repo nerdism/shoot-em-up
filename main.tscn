@@ -1,10 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://lipv0woqx7sv"]
+[gd_scene load_steps=2 format=3 uid="uid://lipv0woqx7sv"]
 
-[ext_resource type="PackedScene" uid="uid://dddvprbc63dh5" path="res://player.tscn" id="1_56rho"]
-[ext_resource type="PackedScene" uid="uid://csbpfvc3ghkyu" path="res://enemy_eagle.tscn" id="2_8lacr"]
+[ext_resource type="PackedScene" uid="uid://blhnnq46prrfk" path="res://player.tscn" id="1_56rho"]
 
 [node name="main" type="Node"]
 
 [node name="Player" parent="." instance=ExtResource("1_56rho")]
-
-[node name="EnemyEagle" parent="." instance=ExtResource("2_8lacr")]
