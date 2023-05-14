@@ -1,10 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://blhnnq46prrfk"]
+[gd_scene load_steps=3 format=3 uid="uid://c30sv53iii562"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_x0upp"]
-[ext_resource type="PackedScene" uid="uid://bw0sfd3caa7nj" path="res://tunder_airplane.tscn" id="2_j4xx8"]
+[ext_resource type="PackedScene" uid="uid://bw0sfd3caa7nj" path="res://airplane_tunder.tscn" id="2_o2vve"]
 
-[node name="Player" type="Node2D"]
+[node name="Player" type="Node2D" groups=["allied_airplane"]]
 position = Vector2(245, 534)
 script = ExtResource("1_x0upp")
-airplane_scene = ExtResource("2_j4xx8")
+airplane_scene = ExtResource("2_o2vve")
 metadata/_edit_group_ = true

@@ -1,7 +1,46 @@
-[gd_scene load_steps=2 format=3 uid="uid://lipv0woqx7sv"]
+[gd_scene load_steps=7 format=3 uid="uid://bvty6fl14ar0a"]
 
-[ext_resource type="PackedScene" uid="uid://blhnnq46prrfk" path="res://player.tscn" id="1_56rho"]
+[ext_resource type="Texture2D" uid="uid://p0ynahw85ck2" path="res://textures/Jungle.png" id="1_4g1u1"]
+[ext_resource type="PackedScene" uid="uid://c30sv53iii562" path="res://player.tscn" id="1_56rho"]
+[ext_resource type="Script" path="res://main.gd" id="1_c8aga"]
+[ext_resource type="PackedScene" uid="uid://68jvww54ddib" path="res://enemy.tscn" id="1_jvu11"]
+[ext_resource type="Script" path="res://ParallaxBackground.gd" id="3_eq38n"]
+[ext_resource type="FontFile" uid="uid://bk6ot4pdlrtsg" path="res://gui-theme/kenvector_future.ttf" id="6_wvisl"]
 
 [node name="main" type="Node"]
+script = ExtResource("1_c8aga")
+
+[node name="Enemy" parent="." instance=ExtResource("1_jvu11")]
+position = Vector2(497, 107)
 
 [node name="Player" parent="." instance=ExtResource("1_56rho")]
+position = Vector2(509, 558)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+script = ExtResource("3_eq38n")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1024, 4023)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(512, -8)
+texture = ExtResource("1_4g1u1")
+
+[node name="EnemySpawner" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="GameOverLabel" type="Label" parent="."]
+visible = false
+offset_left = 140.0
+offset_top = 266.0
+offset_right = 937.0
+offset_bottom = 382.0
+theme_override_fonts/font = ExtResource("6_wvisl")
+theme_override_font_sizes/font_size = 100
+text = "Gamer Over"
+
+[connection signal="player_destroyed" from="Player" to="." method="_on_player_destroyed"]
+[connection signal="timeout" from="EnemySpawner" to="." method="_on_enemy_spawner_timeout"]

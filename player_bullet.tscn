@@ -7,6 +7,7 @@
 size = Vector2(4, 14)
 
 [node name="PlayerBullet" type="RigidBody2D" groups=["allied_bullet"]]
+collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("1_gyvrh")
 metadata/_edit_group_ = true

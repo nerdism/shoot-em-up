@@ -7,6 +7,7 @@
 size = Vector2(4, 14)
 
 [node name="EnemyBullet" type="RigidBody2D" groups=["enemy_bullet"]]
+collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("1_xythf")
 metadata/_edit_group_ = true

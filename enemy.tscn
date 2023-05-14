@@ -1,0 +1,88 @@
+[gd_scene load_steps=3 format=3 uid="uid://68jvww54ddib"]
+
+[ext_resource type="PackedScene" uid="uid://b1bwjy376072r" path="res://airplane_eagle.tscn" id="2_ywbyf"]
+
+[sub_resource type="GDScript" id="GDScript_m51vx"]
+script/source = "extends Node2D
+
+@export var airplane_scene: PackedScene
+@export var hitpoint = 30
+@export var fire_interval: float = 1
+@export var speed = 100
+var airplane
+
+var screen_size
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	screen_size = get_viewport_rect().size
+	airplane = airplane_scene.instantiate()
+	airplane.body_entered.connect(_colission_detected)
+	airplane.area_entered.connect(_area_enterd)
+	airplane.airplane_destroyed.connect(_enemy_destroyed)
+	airplane.hitpoint = hitpoint
+	airplane.fly_direction = airplane.Direction.DOWN
+	add_child(airplane)
+	var airplane_sprite_size = airplane.get_node(\"Sprite2D\").region_rect.size
+	print_debug($VisibleOnScreenNotifier2D.rect.size)
+	$VisibleOnScreenNotifier2D.rect.size = airplane_sprite_size
+	$FireInterval.wait_time = fire_interval
+	$FireInterval.start()
+	#print_debug($VisibleOnScreenNotifier2D.rect.size)
+	#$VisibleOnScreenNotifier2D.get_node(\"ColorRect\").size = $VisibleOnScreenNotifier2D.rect.size
+	#$ColorRect.size = $VisibleOnScreenNotifier2D.rect.size
+	#print_debug($ColorRect.size)
+	
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if not airplane.is_destroyed():
+		handle_movement(delta)
+	
+
+func handle_movement(delta):
+	var velocity = Vector2(0, 1) # The player's movement vector.
+	velocity = velocity.normalized() * speed
+	position += velocity * delta
+	position.x = clamp(position.x, 0, screen_size.x)
+
+
+func _on_fire_interval_timeout():
+	airplane.fire_bullet()
+
+func _colission_detected(body: Node2D):
+	if body.is_in_group(\"allied_bullet\"):
+		print_debug(\"enemy got hit\")
+		body.queue_free()
+		airplane.get_damage(body.damage)
+	
+	
+func _area_enterd(area: Area2D):
+	print_debug(area.get_groups())
+	if area.is_in_group(\"airplane\"):
+		print_debug(\"enemy got hit by allied airplane\")
+		airplane.get_damage(100000)
+	
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	queue_free()	
+	print_debug(\"enemy exited screen\")
+
+func _enemy_destroyed():
+	queue_free()
+	
+"
+
+[node name="Enemy" type="Node2D" groups=["enemy_airplane"]]
+script = SubResource("GDScript_m51vx")
+airplane_scene = ExtResource("2_ywbyf")
+metadata/_edit_group_ = true
+
+[node name="FireInterval" type="Timer" parent="."]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="timeout" from="FireInterval" to="." method="_on_fire_interval_timeout"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -1,0 +1,166 @@
+[gd_scene load_steps=25 format=3 uid="uid://b1bwjy376072r"]
+
+[ext_resource type="Script" path="res://airplane.gd" id="1_mki5n"]
+[ext_resource type="PackedScene" uid="uid://b4gjglijrrtbg" path="res://enemy_bullet.tscn" id="2_m3nju"]
+[ext_resource type="Texture2D" uid="uid://btq3froj58atw" path="res://textures/Entities.png" id="3_qox7d"]
+[ext_resource type="AudioStream" uid="uid://c6pcqo6imxbj4" path="res://sounds/gameplay/EnemyGunfire.wav" id="4_u38u4"]
+[ext_resource type="AudioStream" uid="uid://cqv8sskfxhssl" path="res://sounds/gameplay/Explosion1.wav" id="5_gwft5"]
+[ext_resource type="Texture2D" uid="uid://cnqjd1jtm1jeb" path="res://textures/Explosion.png" id="6_8ou3y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gjh6o"]
+size = Vector2(83, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d050a"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0puva"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anx7b"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hjx1v"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kxeaq"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ipul1"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k383i"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(512, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_158d3"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(768, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ter6p"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(0, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_va1r5"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(256, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gshrh"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(512, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p50vv"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(768, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ulb7"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(0, 768, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbrhg"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(256, 768, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wm510"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(512, 768, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8tjw3"]
+atlas = ExtResource("6_8ou3y")
+region = Rect2(768, 768, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0in0g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d050a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0puva")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_anx7b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hjx1v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kxeaq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ipul1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k383i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_158d3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ter6p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_va1r5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gshrh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p50vv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ulb7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbrhg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wm510")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tjw3")
+}],
+"loop": false,
+"name": &"explosion",
+"speed": 5.0
+}]
+
+[node name="AirplaneEagle" type="Area2D" groups=["airplane"]]
+script = ExtResource("1_mki5n")
+BulletScene = ExtResource("2_m3nju")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_qox7d")
+region_enabled = true
+region_rect = Rect2(144, 0, 84, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_gjh6o")
+
+[node name="FireBulletSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_u38u4")
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_gwft5")
+
+[node name="HealthLabel" type="Label" parent="."]
+offset_left = -20.0
+offset_top = 34.0
+offset_right = 23.0
+offset_bottom = 60.0
+text = "10 hp"
+
+[node name="ExplosionAnimation" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_0in0g")
+animation = &"explosion"
+frame = 15
+frame_progress = 1.0
+speed_scale = 3.0
